@@ -54,11 +54,13 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'openbar.urls'
-
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates/'),
+)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -20,3 +20,5 @@ db.sqlite3
 # ignore compiled python
 *.pyc
 .idea/*
+openbar/openbar_users/migrations/*
+openbar/openbar_search/migrations/*
