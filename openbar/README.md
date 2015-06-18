@@ -39,4 +39,25 @@ templates. Django models an MVC (model, view, controller paradigm); this is conf
 conventions, in Django terms it would be a MTV (model, template, view). Nevertheless the paradigm stays the same:
 templates talk to views which talk to models; models should never talk to templates directly.
 
+#####Working with a Database
+Django defaults to a sqlite3 database. This works perfect for us, its simple, yet powerful. It store the data in a
+single files which is compact and easy to manage.
 
+When working with databases, you define a schema or blueprints of what the data will look like. These blueprints are
+based on the models (which is the data being stored in the db). When changes are made to the models, you must change
+the database schema. When you have a database that is running in production, you have to be careful not to lose data
+that is already in the database. To handle this, we have database migrations. These are instructions for the database
+to update it's schema. So if you make changes to the models, you have to make and run the migrations to keep the
+database up to date.
+
+To make migrations, run:
+```bash
+python manage.py makemigrations
+```
+
+To then run those migrations, run:
+```bash
+python manage.py migrate
+```
+
+Be sure to do this every time you make a model change, or the application will break.
