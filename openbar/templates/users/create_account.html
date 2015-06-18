@@ -6,4 +6,9 @@
     {{ searcher_form}}
     <button type="submit" class="btn btn-default" >Submit</button>
 </form>
+<br>
+<h3>Existing User:</h3>
+{% for user in users %}
+  <span>{{ user }}</span><br/>
+{% endfor %}
 {% endblock body_content %}
