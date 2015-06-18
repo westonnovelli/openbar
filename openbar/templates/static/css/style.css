@@ -1,0 +1,25 @@
+* {
+	color: #62686C;
+}
+
+.logo {
+	font-weight: normal;
+	letter-spacing: 4px;
+}
+
+.logo b {
+	font-weight: bold;
+}
+
+h4 {
+	font-weight: normal;
+}
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+  }
+
+
