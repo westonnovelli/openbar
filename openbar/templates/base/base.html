@@ -9,6 +9,33 @@
     {% endblock specific_css %}
 </head>
 <body>
+    <div class="alerts col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+        {% if success %}
+            <div id="successAlert" class="alert alert-success alert-dismissable fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{ success.text }}
+            </div>
+            <script type="text/javascript">
+                fadeOut("#successAlert", 8000)
+            </script>
+        {% endif %}
+
+        {% if error %}
+            <div id="errorAlert" class="alert alert-danger alert-dismissable fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                {{ error.text }}
+            </div>
+            <script type="text/javascript">
+                fadeOut("#errorAlert", 100000)
+            </script>
+        {% endif %}
+    </div>
     {% block body_content %}
     {% endblock body_content %}
     <script>

@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
+from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from forms import LoginForm, SearcherForm
@@ -32,16 +33,22 @@ def redirect_to_page():
     url = "/"
     return HttpResponseRedirect(url)
 
-def create_account(request):
+def create_account(request, success=None, error=None):
     searcher_form = SearcherForm()
-    return render(request, 'users/create_account.html', {'searcher_url': 'searcher/new', 'searcher_form': searcher_form})
+    return render(request, 'users/create_account.html', {'searcher_url': 'searcher/new', 'searcher_form': searcher_form,
+                                                         'success': success, 'error': error})
 
 def create_searcher(request):
     if request.method == 'POST':
         searcher_form = SearcherForm(request.POST or None)
         if searcher_form.is_valid():
             user = User(username=searcher_form.cleaned_data['name'])
-            user.save()
+            try:
+                user.save()
+            except IntegrityError:
+                error = {"text": "User "+user.username+" already exists"}
+                return create_account(request, error)
             searcher = Searcher(user_profile=user)
             searcher.save()
-    return render(request, 'index.html')
+            success = {"text": "new account created for "+user.username}
+    return render(request, 'index.html', {'success': success})
