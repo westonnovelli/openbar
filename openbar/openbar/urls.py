@@ -19,4 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'openbar.main.index'),
+    url(r'^login/$', 'openbar_users.views.login', name='login'),
+    url(r'^logout/$', 'openbar_users.views.logout', name='logout'),
+    url(r'^create_account/$', 'openbar_users.views.create_account', name='create_account'),
+    url(r'^searcher/new/$', 'openbar_users.views.create_searcher', name='new_searcher'),
 ]

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}OpenBAR{% endblock title %}</title>
+    <!-- STYLESHEETS -->
+    {% block specific_css %}
+    {% endblock specific_css %}
+</head>
+<body>
+    {% block body_content %}
+    {% endblock body_content %}
+    <script>
+        $(function () { $("[data-toggle='tooltip']").tooltip(); });
+        $(function () { $("[data-toggle='popover']").popover({html: true}); });
+    </script>
+    {% block specific_js %}
+    {% endblock specific_js %}
+</body>
+</html>

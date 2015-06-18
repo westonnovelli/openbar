@@ -1,0 +1,9 @@
+{% extends "base/base.html" %}
+{% block body_content %}
+{% url 'new_searcher' as searcher_url %}
+<form name="newSearcher" action="{{ searcher_url }}" method="post">
+    {% csrf_token %}
+    {{ searcher_form}}
+    <button type="submit" class="btn btn-default" >Submit</button>
+</form>
+{% endblock body_content %}

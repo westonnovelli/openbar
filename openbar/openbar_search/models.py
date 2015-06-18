@@ -1,5 +1,6 @@
 from django.db import models
 from openbar.global_util import convert
+from openbar_users.models import Searcher
 
 class ComplexityScore(models.Model):
     """
@@ -29,3 +30,4 @@ class Preference(models.Model):
     medium = models.CharField(max_length=2, choices=MEDIUM_CHOICES, default='T')
     topic = models.IntegerField()
     complexity_score = models.ForeignKey(ComplexityScore)
+    searcher = models.ForeignKey(Searcher)
