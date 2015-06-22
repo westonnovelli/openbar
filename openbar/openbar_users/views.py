@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from forms import LoginForm, SearcherForm
@@ -19,11 +20,11 @@ def app_login(request):
                 print "User doesn't exist"
     return render(request, 'index.html')
 
-
 def login_page(request):
     login_form = LoginForm()
     return render(request, 'login/login.html', {'login_form': login_form})
 
+@login_required
 def app_logout(request):
     print 'logging out'
     logout(request)

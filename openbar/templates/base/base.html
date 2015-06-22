@@ -39,9 +39,9 @@
         {% endif %}
     </div>
     {% if user.is_authenticated %}
-        <form action="{{ logout_url }}" method="post">
-            <input hidden="true" name="none" value="tmp"/>
-            Logged in as: {{ user.username }} <button type="button">Log Out</button>
+        <form action="{{ logout_url }}">
+            {% csrf_token %}
+            <span>Logged in as: {{ user.username }}</span> <button type="submit">Log Out</button>
         </form>
     {% else %}
     {% endif %}

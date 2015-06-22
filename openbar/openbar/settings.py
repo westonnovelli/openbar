@@ -53,10 +53,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-# AUTHENTICATION_BACKENDS = (
-    # 'django.contrib.auth.backends.ModelBackend',
-    # 'openbar_users.auth.mock_auth_backend.MockAuthBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+    'openbar_users.auth.mock_auth_backend.MockAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 ROOT_URLCONF = 'openbar.urls'
 TEMPLATE_DIRS = (
