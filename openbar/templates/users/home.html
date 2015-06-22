@@ -1,0 +1,25 @@
+{% extends "base/base.html" %}
+{% block body_content %}
+{% url 'new_preference' as new_preference_url %}
+<h3>Preferences</h3>
+<form method="POST" action="{{ new_preference_url }}">
+    {{ preference_form }}
+    {% csrf_token %}
+    <button type="submit">Add</button>
+</form>
+<br>
+<table style="text-align: center">
+    <tr>
+        <td><strong>Topic</strong></td>
+        <td><strong>Medium</strong></td>
+        <td><strong>Complexity Score</strong></td>
+    </tr>
+{% for preference in preferences %}
+    <tr>
+        <td>{{ preference.topic }}</td>
+        <td>{{ preference.medium }}</td>
+        <td>{{ preference.complexity_score }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock body_content %}
