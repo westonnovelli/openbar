@@ -45,3 +45,17 @@ class Preference(models.Model):
     def __unicode__(self):
         medium_text = [choice for choice in Medium.choices() if choice[0] == self.medium][0][1]
         return str(self.topic) + ' ' + medium_text + ' ' + str(self.complexity_score)
+
+class Query(models.Model):
+    """
+    Query data
+    """
+    url = models.CharField()        # We may want to consider a max_length parameter here
+    media = models.CharField()
+    subject = models.CharField()
+    title = models.CharField()      # This may change
+    objects = MainManager()
+
+
+
+
