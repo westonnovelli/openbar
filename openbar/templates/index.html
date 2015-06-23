@@ -4,43 +4,18 @@
 
 {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'openbar_search/css/bootstrap.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'openbar_search/css/bootstrap-theme.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'openbar_search/css/style.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
 
 {% endblock specific_css %}
 
 {% block body_content %}
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#!" style="letter-spacing:2px">open<b>bar</b></a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/create_account">Sign Up</a></li>
-            <li><a href="/show_login">Log In</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
     <!-- Main Body -->
     <div class="container display-box" align="center">
 
         <!-- Logo -->
         <div class="row">
-            <a href="#!"><img src="{% static 'openbar_search/img/openbar_logo.png' %}" width="5%" /></a>
+            <a href="#!"><img src="{% static 'search/img/openbar_logo.png' %}" width="5%" /></a>
             <h1 class="logo">open<b>bar</b></h1>
             <h4>the smarter search engine</h4><br>
         </div>
@@ -104,7 +79,5 @@
 {% endblock body_content %}
 
 {% block specific_js %}
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="{% static 'openbar_search/js/bootstrap.js' %}"></script>
-    <script src="{% static 'openbar_search/js/init.js' %}"></script>
+    <script src="{% static 'search/js/init.js' %}"></script>
 {% endblock specific_js %}

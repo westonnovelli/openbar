@@ -1,0 +1,20 @@
+* {
+	color: #62686C;
+}
+
+body {
+    padding-top: 100px;
+    background-color: #77B140;
+}
+
+.display-box {
+	background-color: white;
+	padding: 30px;
+	border-radius: 50px;
+	box-shadow: 2px 2px 5px #444;
+}
+
+.logo {
+	font-weight: normal;
+	letter-spacing: 4px;
+}
