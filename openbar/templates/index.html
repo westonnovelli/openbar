@@ -1,5 +1,14 @@
 {% extends 'base/base.html' %}
 
+{% block specific_css %}
+
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'openbar_search/css/bootstrap.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'openbar_search/css/bootstrap-theme.css' %}" />
+
+{% endblock specific_css %}
+
 {% block body_content %}
 <span>Welcome to OpenBAR!</span>
 <span><a href="/create_account">Create Account</a></span>

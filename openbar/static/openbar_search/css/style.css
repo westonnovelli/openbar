@@ -2,6 +2,10 @@
 	color: #62686C;
 }
 
+body {
+    background-color: blue;
+}
+
 .logo {
 	font-weight: normal;
 	letter-spacing: 4px;
