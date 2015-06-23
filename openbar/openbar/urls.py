@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^searcher/new/$', 'openbar_users.views.create_searcher', name='new_searcher'),
     url(r'^home/$', 'openbar_users.views.home_view', name='homepage'),
     url(r'^preference/new$', 'openbar_search.views.add_preference', name='new_preference'),
+    url(r'^search/$', 'openbar_search.views.search', name='search'),
 ]

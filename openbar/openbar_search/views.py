@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from openbar.global_util import convert
 
-from openbar_search.forms import PreferenceForm
-from openbar_search.models import Preference, Topic, Medium, ComplexityScore
+from openbar_search.forms import PreferenceForm, SearchForm
+from openbar_search.models import Preference, Medium, ComplexityScore
+from openbar_search.search_engine import return_results
 from openbar_users.models import Searcher
 from openbar_users.views import home_view
 
@@ -12,7 +13,6 @@ from openbar_users.views import home_view
 def add_preference(request):
     preference_form = PreferenceForm(request.POST or None)
     if preference_form.is_valid():
-        print "got valid request"
         topic = preference_form.cleaned_data['topic']
         medium = int(preference_form.cleaned_data['medium'])
         complexity_score = preference_form.cleaned_data['complexity_score']
@@ -29,3 +29,10 @@ def add_preference(request):
                                     searcher=searcher_obj)
         new_preference.save()
     return redirect(home_view)
+
+
+def search(request):
+    search_form = SearchForm(request.GET or None)
+    if search_form is not None and search_form.is_valid():
+        search_results = return_results(search_form.cleaned_data['input'])
+        return render(request, 'search/results.html', {'results': search_results})
