@@ -3,16 +3,21 @@
 }
 
 body {
-    background-color: blue;
+	padding-top: 100px;
+	background-color: #77B140;
+}
+
+.display-box {
+	background-color: white; 
+	padding: 50px; 
+	border-radius: 50px; 
+	box-shadow: 2px 2px 5px #444;
 }
 
 .logo {
 	font-weight: normal;
 	letter-spacing: 4px;
-}
-
-.logo b {
-	font-weight: bold;
+	font-size: 3.5em;
 }
 
 h4 {
@@ -25,5 +30,13 @@ h4 {
     margin: .8em 0 .2em;
     line-height: 1.5;
   }
+
+a {
+ 	text-decoration: none;
+ }
+
+ .dropdown-menu li {
+ 	line-height: 120%;
+ }
 
 
