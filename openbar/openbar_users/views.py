@@ -40,8 +40,10 @@ def app_logout(request):
 def create_account(request, success=None, error=None):
     searcher_form = SearcherForm()
     users = [user.username for user in User.objects.all()]
+    login_form = LoginForm()
     return render(request, 'users/create_account.html', {'searcher_url': 'searcher/new', 'searcher_form': searcher_form,
-                                                         'success': success, 'error': error, 'users': users})
+                                                         'success': success, 'error': error, 'users': users,
+                                                         'login_form': login_form})
 
 def create_searcher(request):
     searcher_form = SearcherForm(request.POST or None)

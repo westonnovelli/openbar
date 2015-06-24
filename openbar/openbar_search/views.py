@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from openbar.global_util import convert
 
@@ -36,3 +37,7 @@ def search(request):
     if search_form is not None and search_form.is_valid():
         search_results = return_results(search_form.cleaned_data['input'])
         return render(request, 'search/results.html', {'results': search_results})
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def results(request):
+    return render(request, 'search/results.html')

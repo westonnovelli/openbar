@@ -18,7 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'openbar.main.index'),
+    url(r'^$', 'openbar.main.index', name='index'),
     url(r'^show_login/$', 'openbar_users.views.login_page', name='show_login'),
     url(r'^login$', 'openbar_users.views.app_login', name='login'),
     url(r'^logout$', 'openbar_users.views.app_logout', name='logout'),
@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^home/$', 'openbar_users.views.home_view', name='homepage'),
     url(r'^preference/new$', 'openbar_search.views.add_preference', name='new_preference'),
     url(r'^search/$', 'openbar_search.views.search', name='search'),
+    url(r'^results/$', 'openbar_search.views.results', name='results'),
 ]

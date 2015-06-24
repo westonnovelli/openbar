@@ -7,15 +7,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
 
 {% endblock specific_css %}
+{% url 'index' as index_url %}
 
 {% block body_content %}
-
-    <!-- Main Body -->
-    <div class="container display-box" align="center">
-
+<div class="container display-box" align="center">
         <!-- Logo -->
         <div class="row">
-            <a href="#!"><img src="{% static 'search/img/openbar_logo.png' %}" width="5%" /></a>
+            <a href="{{ index_url }}"><img src="{% static 'search/img/openbar_logo.png' %}" width="5%" /></a>
             <h1 class="logo">open<b>bar</b></h1>
             <h4>the smarter search engine</h4><br>
         </div>
@@ -24,49 +22,8 @@
 
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
-                        <!--Dropdown-->
-                        <ul class="dropdown-menu" id="search-settings" style="padding: 5px 15px 15px 15px">
-                            <li>
-                                <div class="row" style="width: 250px">
-                                    <ul class="list-unstyled col-md-6">
-                                        <li class="dropdown-header">Subjects</li>
-                                        <li><input type="checkbox" name="subject" value="all" checked> All</li>
-                                        <li><input type="checkbox" name="subject" value="math"> Math</li>
-                                        <li><input type="checkbox" name="subject" value="math"> Science</li>
-                                        <li><input type="checkbox" name="subject" value="math"> Psychology</li>
-                                        <li><input type="checkbox" name="subject" value="math"> Economics</li>
-                                        <li><input type="checkbox" name="subject" value="math"> Fine Arts</li>
-                                    </ul>
-                                    <ul class="list-unstyled col-md-6">
-                                        <li class="dropdown-header">Media</li>
-                                        <li><input type="checkbox" name="media" value="all" checked> All</li>
-                                        <li><input type="checkbox" name="media" value="math"> Text</li>
-                                        <li><input type="checkbox" name="media" value="math"> Video</li>
-                                        <li><input type="checkbox" name="media" value="math"> Interactive</li>
-                                        <li><input type="checkbox" name="media" value="math"> Course</li>
-                                        <li><input type="checkbox" name="media" value="math"> OpenStax</li>
-                                    </ul>
-                                </div>
-                                <div class="row" style="width: 250px">
-                                    <ul class="list-unstyled col-md-12">
-                                        <li role="separator" class="divider"></li>
-                                        <a href="#!"><li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile</li></a>
-                                        <a href="#!"><li><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</li></a>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                      </div>
-                      <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" id="search" for="search">
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </span>
-                    </div>
-                  </div>
-                </div><br><br>
+                {% include "search/search.html" %}
+                <br><br>
 
                 <p>
                     Give it a shot!<br>
@@ -74,10 +31,5 @@
                     For example, "derivatives" might be a good place to start...
                 </p>
             </div>
-        </div>
-
+    </div>
 {% endblock body_content %}
-
-{% block specific_js %}
-    <script src="{% static 'search/js/init.js' %}"></script>
-{% endblock specific_js %}
