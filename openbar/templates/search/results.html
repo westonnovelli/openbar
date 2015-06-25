@@ -1,5 +1,18 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
+
+{% block specific_css %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
+
+{% endblock specific_css %}
+
 {% block body_content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="alert alert-warning" role="alert">Sorry, no results were found.</div>
+        </div>
+    </div>
 
 {% endblock body_content %}

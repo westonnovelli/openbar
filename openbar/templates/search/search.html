@@ -12,35 +12,89 @@
                 <li>
                     <div class="row" style="width: 250px">
                         <ul class="list-unstyled col-md-6">
+                            <!-- Subjects -->
                             <li class="dropdown-header">Subjects</li>
-                            <li><input type="checkbox" name="subject" value="all" checked> All</li>
-                            <li><input type="checkbox" name="subject" value="math"> Math</li>
-                            <li><input type="checkbox" name="subject" value="math"> Science</li>
-                            <li><input type="checkbox" name="subject" value="math"> Psychology</li>
-                            <li><input type="checkbox" name="subject" value="math"> Economics</li>
-                            <li><input type="checkbox" name="subject" value="math"> Fine Arts</li>
+                            <form>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="all" checked>
+                                        All
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="math">
+                                        Math
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="science">
+                                        Science
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="history">
+                                        History
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="art">
+                                        Fine Arts
+                                    </label>
+                                </div>
+                            </form>
                         </ul>
+                        <!-- Media -->
                         <ul class="list-unstyled col-md-6">
                             <li class="dropdown-header">Media</li>
-                            <li><input type="checkbox" name="media" value="all" checked> All</li>
-                            <li><input type="checkbox" name="media" value="math"> Text</li>
-                            <li><input type="checkbox" name="media" value="math"> Video</li>
-                            <li><input type="checkbox" name="media" value="math"> Interactive</li>
-                            <li><input type="checkbox" name="media" value="math"> Course</li>
-                            <li><input type="checkbox" name="media" value="math"> OpenStax</li>
+                            <form>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="all" checked>
+                                        All
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="text">
+                                        Text
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="video">
+                                        Video
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="interactive">
+                                        Interactive
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="openstax">
+                                        OpenStax
+                                    </label>
+                                </div>
+                            </form>
                         </ul>
                     </div>
                     <div class="row" style="width: 250px">
                         <ul class="list-unstyled col-md-12">
                             <li role="separator" class="divider"></li>
-                                {% if user.is_authenticated %}
-                                    <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile</li></a>
-                                    <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</li></a>
-                                {% else %}
-                                <a href="/show_login">Log In</a>
-                                {% endif %}
-                            </ul>
-                        </div>
+                            {% if user.is_authenticated %}
+                                <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile</li></a>
+                                <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</li></a>
+                            {% else %}
+                                <a data-toggle="modal" data-target="#loginModal" href="#!">Log In</a>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -53,6 +107,6 @@
 </form>
 
 {% block specific_js %}
-{% load staticfiles %}
-<script src="{% static 'search/js/init.js' %}"></script>
+    {% load staticfiles %}
+    <script src="{% static 'search/js/init.js' %}"></script>
 {% endblock specific_js %}
