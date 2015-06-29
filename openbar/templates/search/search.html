@@ -14,7 +14,6 @@
                         <ul class="list-unstyled col-md-6">
                             <!-- Subjects -->
                             <li class="dropdown-header">Subjects</li>
-                            <form>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="all" checked>
@@ -45,12 +44,10 @@
                                         Fine Arts
                                     </label>
                                 </div>
-                            </form>
                         </ul>
                         <!-- Media -->
                         <ul class="list-unstyled col-md-6">
                             <li class="dropdown-header">Media</li>
-                            <form>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="all" checked>
@@ -81,7 +78,6 @@
                                         OpenStax
                                     </label>
                                 </div>
-                            </form>
                         </ul>
                     </div>
                     <div class="row" style="width: 250px">
@@ -99,7 +95,7 @@
             </ul>
         </div>
         {% csrf_token %}
-        <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" id="search" for="search" name="search">
+        <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" id="search" for="search" name="input">
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </span>

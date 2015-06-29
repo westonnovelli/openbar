@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from openbar.global_util import convert
 
 from openbar_search.forms import PreferenceForm, SearchForm
-from openbar_search.models import Preference, Medium, ComplexityScore
+from openbar_search.models import Preference, Medium, ComplexityScore, BasicComplexityScore
 from openbar_search.search_engine import return_results
 from openbar_users.models import Searcher
 from openbar_users.views import home_view
@@ -21,8 +21,8 @@ def add_preference(request):
         y_axis = complexity_score[1:]
 
         medium_obj = Medium.choices()[medium][0]
-        complexity_score_obj, created = ComplexityScore.objects.get_or_create(depth_of_material=convert(x_axis, False),
-                                                                              average_time_to_master=y_axis)
+        complexity_score_obj, created = BasicComplexityScore.objects.get_or_create(depth_of_material=convert(x_axis, False),
+                                                                                   average_time_to_master=y_axis)
         searcher_obj = Searcher.objects.get_or_none(user_profile=request.user)
         new_preference = Preference(topic=topic,
                                     medium=medium_obj,
@@ -33,9 +33,9 @@ def add_preference(request):
 
 
 def search(request):
-    search_form = SearchForm(request.GET or None)
-    if search_form is not None and search_form.is_valid():
-        search_results = return_results(search_form.cleaned_data['input'])
+    search_form = SearchForm(request.POST)
+    if search_form.is_valid():
+        search_results = return_results(search_form.cleaned_data['input'], request.user)
         return render(request, 'search/results.html', {'results': search_results})
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

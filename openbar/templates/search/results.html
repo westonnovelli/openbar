@@ -10,9 +10,11 @@
 {% block body_content %}
 
     <div class="container">
-        <div class="row">
-            <div class="alert alert-warning" role="alert">Sorry, no results were found.</div>
-        </div>
+        <ul>
+            {% for result in results %}
+                <li><a href="{{ result.query.url }}">{{ result.query.title }}</a></li>
+            {% endfor %}
+        </ul>
     </div>
 
 {% endblock body_content %}
