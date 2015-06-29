@@ -14,7 +14,7 @@ def complexity_filter(results, user):
 def keyword_filter(results, terms):
     """ Filters to only the results that match the keyword terms. """
     for result in results.keys():
-        matches = set(result.title.split(' ')).intersection(set(terms))
+        matches = set(result.title.lower().split(' ')).intersection(set(terms))
         if len(matches) > 0:
             results[result].set_keyword_count(matches)
         else:
@@ -39,7 +39,7 @@ def return_results(search_terms, user):
     final_results = {}
     for result in raw_results:
         final_results[result] = Result(result)
-    keyword_filter(final_results, search_terms.split(' '))
+    keyword_filter(final_results, search_terms.lower().split(' '))
     # if user is not None:
         # complexity_filter(final_results, user)
     return rank(final_results)
