@@ -28,14 +28,9 @@
             </button>
             <a class="navbar-brand" href="{{ index_url }}" style="letter-spacing:2px">open<b>bar</b></a>
             {% if request.get_full_path != index_url %}
-            <form class="navbar-form navbar-left" role="search">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Get a drink?">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </span>
+                <div class="navbar-form navbar-left">
+                    {% include 'search/search.html' %}
                 </div>
-            </form>
             {%  endif  %}
         </div>
 

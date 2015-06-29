@@ -59,5 +59,6 @@ def create_searcher(request):
         else:
             error = {"text": "User "+user.username+" already exists"}
             return create_account(request, error)
-    return render(request, 'index.html', {'success': success})
+    login_form = LoginForm()
+    return render(request, 'index.html', {'login_form': login_form})
 
