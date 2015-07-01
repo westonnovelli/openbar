@@ -10,15 +10,15 @@
 {% block body_content %}
 
     <div class="container">
-        <ul class="media-list">
+        <ul class="list-group">
             {% for result in results %}
-                <li class="media">
-                    <div class="media-body">
+                <li class="list-group-item">
+                    <div class="">
                         <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
                             <small>{{ result.query.short_form }}</small></h5></a>
                     </div>
-                    <div class="media-right">
-                        {{ result.query.complexity_score }}
+                    <div class="">
+                        {{ result.query.complexity_score.show }}
                     </div>
                 </li>
             {% endfor %}

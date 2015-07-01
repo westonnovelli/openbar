@@ -28,4 +28,7 @@ urlpatterns = [
     url(r'^preference/new$', 'openbar_search.views.add_preference', name='new_preference'),
     url(r'^search/$', 'openbar_search.views.search', name='search'),
     url(r'^results/$', 'openbar_search.views.results', name='results'),
+
+    url(r'^voodoo/599aaf818f60edbb2c001784f19217dd/randomize_complexity',
+        'openbar_search.complexilizer.randomize_complexity'),
 ]

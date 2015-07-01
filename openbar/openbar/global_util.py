@@ -24,12 +24,13 @@ def convert(depth_of_material_score, num_to_letter=True):
     :param depth_of_material_score: the integer score of the depth of material
     :return: a character corresponding to the score.
     """
-    constant = 38
+    constant = 39
     score_map = {1: 'A', 2: 'B', 3: 'C', 4: 'D', 5: 'E', 6: 'F', 7: 'G', 8: 'H', 9: 'I', 10: 'J', 11: 'K', 12: 'L',
                  13: 'M', 14: 'N', 15: 'O', 16: 'P', 17: 'Q', 18: 'R', 19: 'S', 20: 'T', 21: 'U', 22: 'V', 23: 'W',
-                 24: 'X', 25: 'Y', 26: 'Z'}
-    count = 1
+                 24: 'X', 25: 'Y', 26: 'Z', 27: '-'}
+    count = 0
     score = 0
+    print depth_of_material_score
     if num_to_letter:
         while score < depth_of_material_score:
             count += 1

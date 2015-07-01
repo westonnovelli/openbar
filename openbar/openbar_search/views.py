@@ -33,10 +33,11 @@ def add_preference(request):
 
 
 def search(request):
-    search_form = SearchForm(request.POST)
-    if search_form.is_valid():
-        search_results = return_results(search_form.cleaned_data['input'], request.user)
-        return render(request, 'search/results.html', {'results': search_results})
+    if request.POST:
+        search_form = SearchForm(request.POST)
+        if search_form.is_valid():
+            search_results = return_results(search_form.cleaned_data['input'], request.user)
+            return render(request, 'search/results.html', {'results': search_results})
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def results(request):

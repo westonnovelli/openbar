@@ -9,10 +9,10 @@ from math import hypot
 class ComplexityScore(models.Model):
 
     def __unicode__(self):
-        raise NotImplementedError
+        return ''
 
-    def is_close(self):
-        raise NotImplementedError
+    def is_close(self, other_score):
+        return True
 
 
 class BasicComplexityScore(ComplexityScore):
@@ -25,6 +25,9 @@ class BasicComplexityScore(ComplexityScore):
     objects = MainManager()
 
     def __unicode__(self):
+        return convert(self.depth_of_material) + str(self.average_time_to_master)
+
+    def show(self):
         return convert(self.depth_of_material) + str(self.average_time_to_master)
 
     def is_close(self, other_score):
@@ -60,7 +63,7 @@ class Preference(models.Model):
     """
     topic = models.ForeignKey(Topic)
     medium = models.CharField(max_length=1, choices=Medium.choices())
-    complexity_score = models.ForeignKey(ComplexityScore)
+    complexity_score = models.ForeignKey(BasicComplexityScore)
     searcher = models.ForeignKey(Searcher)
     objects = MainManager()
 
@@ -76,7 +79,7 @@ class Query(models.Model):
     media = models.TextField()
     subject = models.TextField()
     title = models.TextField()      # This may change
-    complexity_score = models.ForeignKey(ComplexityScore, null=True)
+    complexity_score = models.ForeignKey(BasicComplexityScore, null=True)
     short_form = models.CharField(max_length=140, default="Preview of the page")
     objects = MainManager()
 
