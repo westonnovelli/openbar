@@ -27,8 +27,9 @@ a {
  	text-decoration: none;
  }
 
- .dropdown-menu li {
- 	line-height: 120%;
- }
+.list-unstyled br {
+    display: none;
+}
+
 
 

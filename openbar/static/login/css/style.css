@@ -10,7 +10,7 @@ body {
 .display-box {
 	background-color: white;
 	padding: 30px;
-	border-radius: 50px;
+	border-radius: 15px;
 	box-shadow: 2px 2px 5px #444;
 }
 
