@@ -1,6 +1,7 @@
 __author__ = 'westonnovelli'
 from django import forms
-from models import Searcher
+from models import Searcher, Folder
+
 
 class LoginForm(forms.Form):
     name = forms.CharField(label='Name', max_length='25')
@@ -15,3 +16,5 @@ class SearcherForm(forms.Form):
         model = Searcher
         fields = ['name']
 
+class FolderForm(forms.Form):
+    title = forms.CharField(label='Title', max_length='256')
