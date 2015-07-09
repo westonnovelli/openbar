@@ -20,15 +20,30 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'openbar.main.index', name='index'),
     url(r'^show_login/$', 'openbar_users.views.login_page', name='show_login'),
-    url(r'^login$', 'openbar_users.views.app_login', name='login'),
-    url(r'^logout$', 'openbar_users.views.app_logout', name='logout'),
+    url(r'^accounts/login/$', 'openbar_users.views.app_login', name='login'),
+    url(r'^accounts/logout/$', 'openbar_users.views.app_logout', name='logout'),
     url(r'^create_account/$', 'openbar_users.views.create_account', name='create_account'),
     url(r'^searcher/new/$', 'openbar_users.views.create_searcher', name='new_searcher'),
     url(r'^home/$', 'openbar_users.views.home_view', name='homepage'),
     url(r'^preference/new$', 'openbar_search.views.add_preference', name='new_preference'),
     url(r'^search/$', 'openbar_search.views.search', name='search'),
     url(r'^results/$', 'openbar_search.views.results', name='results'),
+    # url(r'^query/{id}/increase_complexity_score', 'openbar_search.views.increase_complexity_score', name='increase_complexity_query'),
+    # url(r'^query/{id}/decrease_complexity_score', 'openbar_search.views.decrease_complexity_score', name='decrease_complexity_query'),
+    # url(r'^searcher/{id}/increase_complexity_score', 'openbar_search.views.increase_complexity_score', name='increase_complexity_searcher'),
+    # url(r'^searcher/{id}/decrease_complexity_score', 'openbar_search.views.increase_complexity_score', name='decrease_complexity_searcher'),
+    # url(r'^searcher/{id}/set_complexity_score', 'openbar_search.views.increase_complexity_score', name='set_complexity_searcher'),
+
+
+    url(r'^create_folder/$', 'openbar_users.views.create_folder', name='create_folder'),
+    url(r'^add_subfolder/$', 'openbar_users.views.add_subfolder', name='create_subfolder'),
+    url(r'^add_item/$', 'openbar_users.views.add_item', name='create_item'),
+    url(r'^remove_item/$', 'openbar_users.views.remove_item', name='remove_item'),
+    url(r'^remove_subfolder/$', 'openbar_users.views.remove_subfolder', name='remove_subfolder'),
+
 
     url(r'^voodoo/599aaf818f60edbb2c001784f19217dd/randomize_complexity',
         'openbar_search.complexilizer.randomize_complexity'),
+    url(r'^voodoo/normalize', 'openbar_search.views.normalize_scores'),
+    url(r'^voodoo/search_page', 'openbar_search.views.extension'),
 ]

@@ -1,20 +1,27 @@
 {% extends "base/base.html" %}
 
 {% url 'new_preference' as new_preference_url %}
-{% block body_content %}
+{% url 'create_folder' as new_folder_url %}
+{% url 'create_subfolder' as new_subfolder_url %}
 
-<div style="background-color:#77B140;">
-    <div class="row" style="margin: 0 auto;">
-        <div class="col-md-6 col-md-offset-3">
-            <br>
-            <br>
-            <br>
-            <br>
-            {% include "search/search.html" %}
-        </div>
-    </div>
-    <br>
-    <br>
+{% block body_content %}
+<div class="container" align="center">
+    <form method="POST" action="{% url 'openbar_users.views.create_folder' %}">
+        {{ folder_form }}
+        {% csrf_token %}
+        <button type="submit">Create</button>
+    </form>
+    <form method="POST" action="{% url 'openbar_users.views.add_subfolder' %}">
+        {{ folder_form }}
+        {% csrf_token %}
+        <input name="parent" type="text">
+        <button type="submit">SubCreate</button>
+    </form>
+    <ul>
+        {% for folder in folders %}
+        <li><span>{{ folder.title }}</span> <span>{{ folder.owner }}</span> <span>{{ folder.id }}</span>  <span>{{ folder.parent.id }}</span></li>
+        {% endfor %}
+    </ul>
 </div>
 <div class="container display-box" align="center">
     <h3>Preferences</h3>

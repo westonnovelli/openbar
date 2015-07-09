@@ -1,6 +1,6 @@
 import random
 from openbar.main import index
-from openbar_search.models import Query, BasicComplexityScore
+from openbar_search.models.results_models import Query, BasicComplexityScore
 
 __author__ = 'westonnovelli'
 

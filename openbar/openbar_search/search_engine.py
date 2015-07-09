@@ -1,4 +1,4 @@
-from openbar_search.models import Query, Result
+from openbar_search.models.results_models import Query, Result
 
 __author__ = 'westonnovelli'
 

@@ -4,32 +4,81 @@
 
 body {
 	padding-top: 100px;
+	background-color: #dfdfdf;
+}
+
+.navbar {
 	background-color: #77B140;
+	box-shadow: 0px 12px #388e3c;
+	padding-right: 15px;
+}
+
+.navbar-text {
+    color: white;
+}
+
+.navbar-brand b {
+	color: white !important;
+	letter-spacing: 3px;
+}
+
+.navbar a{
+	color: white;
+	text-transform: lowercase;
+}
+
+.navbar-btn {
+	background-color: transparent;
+	border: 2px solid white;
+	border-radius: 20px;
+	color: white;
+	text-transform: lowercase;
+	margin-right: 10px;
+	transition: .3s;
+}
+
+.navbar-btn:hover {
+	background-color: transparent;
+	border: 2px solid #ddd;
+	border-radius: 20px;
+	color: #ddd;
 }
 
 .display-box {
 	background-color: white; 
-	padding: 15px;
+	padding: 50px;
 	border-radius: 15px;
-	box-shadow: 1px 1px 3px #444;
 }
 
 .logo {
 	font-weight: normal;
-	letter-spacing: 4px;
+	letter-spacing: 5px;
+	font-size: 5em;
+	line-height: 50%;
+}
+
+p {
+	color: #62686C;
 }
 
 h4 {
 	font-weight: normal;
 }
 
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+  }
+
 a {
  	text-decoration: none;
  }
 
-.list-unstyled br {
-    display: none;
-}
+ .dropdown-menu li {
+ 	line-height: 120%;
+ }
 
 
 

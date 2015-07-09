@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from openbar.global_util import convert
 
 from openbar_search.forms import PreferenceForm, SearchForm
-from openbar_search.models import Preference, Medium, ComplexityScore, BasicComplexityScore
+from openbar_search.models.results_models import Preference, Medium, BasicComplexityScore
 from openbar_search.search_engine import return_results
 from openbar_users.models import Searcher
 from openbar_users.views import home_view
@@ -42,3 +42,18 @@ def search(request):
 
 def results(request):
     return render(request, 'search/results.html')
+
+
+def increase_complexity_score(request):
+    pass
+
+
+def decrease_complexity_score(request):
+    pass
+
+
+def normalize_scores(request):
+    return render(request, 'search/normalize_score.html')
+
+def extension(request):
+    return render(request, 'search/extension_page.html')

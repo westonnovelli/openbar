@@ -1,3 +1,21 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}OpenBAR{% endblock title %}</title>
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}" />
+
+    {% block specific_css %}
+    {% endblock specific_css %}
+</head>
+{% url 'logout' as logout_url %}
+{% url 'index' as index_url %}
+<body>
 {% url 'search' as search_url %}
 {% url 'homepage' as home_url %}
 <form action="{{ search_url }}" method="post" class="form-horizontal" role="form">
@@ -19,25 +37,25 @@
                                         <input type="checkbox" value="all" checked>
                                         All
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="math">
                                         Math
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="science">
                                         Science
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="history">
                                         History
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="art">
@@ -53,25 +71,25 @@
                                         <input type="checkbox" value="all" checked>
                                         All
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="text">
                                         Text
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="video">
                                         Video
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="interactive">
                                         Interactive
                                     </label>
-                                </div><br>
+                                </div>
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" value="openstax">
@@ -95,14 +113,31 @@
             </ul>
         </div>
         {% csrf_token %}
-        <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" required id="search" for="search" name="input" autofocus>
+        <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" required id="search" for="search" name="input">
         <span class="input-group-btn">
             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
         </span>
     </div>
 </form>
 
+<ul class="nav navbar-nav navbar-right">
+    {% if not user.is_authenticated %}
+        <li><a href="/create_account">Sign Up</a></li>
+        <li><a data-toggle="modal" data-target="#loginModal" href="#!">Log In</a></li>
+    {% else %}
+        <li><p class="navbar-text">Logged in as: {{ user.username }}</p></li>
+        <li>
+            <a href="#!" onclick="document.getElementById('logout_form').submit()">Log Out</a>
+        </li>
+        <form action="{{ logout_url }}" id="logout_form">
+            {% csrf_token %}
+        </form>
+    {% endif %}
+</ul>
+
 {% block specific_js %}
     {% load staticfiles %}
     <script src="{% static 'search/js/init.js' %}"></script>
 {% endblock specific_js %}
+</body>
+</html>
