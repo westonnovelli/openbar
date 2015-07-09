@@ -17,9 +17,15 @@
         <input name="parent" type="text">
         <button type="submit">SubCreate</button>
     </form>
+    <form method="POST" action="{% url 'openbar_users.views.add_item' %}">
+        <input name="query" type="text">
+        {% csrf_token %}
+        <input name="parent" type="text">
+        <button type="submit">AddItem</button>
+    </form>
     <ul>
         {% for folder in folders %}
-        <li><span>{{ folder.title }}</span> <span>{{ folder.owner }}</span> <span>{{ folder.id }}</span>  <span>{{ folder.parent.id }}</span></li>
+        <li><span>{{ folder.title }}</span> <span>{{ folder.owner }}</span> <span>{{ folder.id }}</span>  <span>{{ folder.parent.id  }}</span></li>
         {% endfor %}
     </ul>
 </div>

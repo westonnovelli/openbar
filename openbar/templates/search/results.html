@@ -13,13 +13,9 @@
         <ul class="list-group">
             {% for result in results %}
                 <li class="list-group-item">
-                    <div class="">
-                        <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
-                            <small>{{ result.query.short_form }}</small></h5></a>
-                    </div>
-                    <div class="">
-                        {{ result.query.complexity_score.show }}
-                    </div>
+                    <span class="badge">{{ result.query.complexity_score.show }}</span>
+                    <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
+                        <small>{{ result.query.short_form }}</small></h5></a>
                 </li>
             {% endfor %}
         </ul>
