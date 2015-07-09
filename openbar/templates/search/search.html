@@ -7,91 +7,12 @@
                 <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
             </button>
             <!--Dropdown-->
-            <!-- TODO add the checkboxes in the drop menu to form -->
-            <ul class="dropdown-menu" id="search-settings" style="padding: 5px 15px 15px 15px">
-                <li>
-                    <div class="row" style="width: 250px">
-                        <ul class="list-unstyled col-md-6">
-                            <!-- Subjects -->
-                            <li class="dropdown-header">Subjects</li>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="all" checked>
-                                        All
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="math">
-                                        Math
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="science">
-                                        Science
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="history">
-                                        History
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="art">
-                                        Fine Arts
-                                    </label>
-                                </div>
-                        </ul>
-                        <!-- Media -->
-                        <ul class="list-unstyled col-md-6">
-                            <li class="dropdown-header">Media</li>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="all" checked>
-                                        All
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="text">
-                                        Text
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="video">
-                                        Video
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="interactive">
-                                        Interactive
-                                    </label>
-                                </div><br>
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" value="openstax">
-                                        OpenStax
-                                    </label>
-                                </div>
-                        </ul>
-                    </div>
-                    <div class="row" style="width: 250px">
-                        <ul class="list-unstyled col-md-12">
-                            <li role="separator" class="divider"></li>
-                            {% if user.is_authenticated %}
-                                <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile</li></a>
-                                <a href="{{ home_url }}"><li><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</li></a>
-                            {% else %}
-                                <a data-toggle="modal" data-target="#loginModal" href="#!">Log In</a>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </li>
+            <ul class="dropdown-menu nav nav-list" id="folders" style="">
+                {% if user.is_authenticated %}
+                    {% include 'users/folders.html' with folders=folders %}
+                {% else %}
+                    <a data-toggle="modal" data-target="#loginModal">Log In</a> to save bookmarks.
+                {% endif %}
             </ul>
         </div>
         {% csrf_token %}
@@ -105,4 +26,20 @@
 {% block specific_js %}
     {% load staticfiles %}
     <script src="{% static 'search/js/init.js' %}"></script>
+    <script type="text/javascript">
+        function set_menu() {
+          $('.tree-toggle').click(function () {
+            $(this).parent().children('ul.tree').toggle(200);
+          });
+          $(function(){
+            $('.tree-toggle').parent().children('ul.tree').toggle(200);
+          })
+        }
+        $(document).ready(function() {
+//            $('.dropdown-menu').click(function(event) {
+//                 event.stopPropagation();
+//              });​
+           set_menu();
+        });
+    </script>
 {% endblock specific_js %}

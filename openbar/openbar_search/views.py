@@ -9,7 +9,7 @@ from openbar_search.forms import PreferenceForm, SearchForm
 from openbar_search.models.results_models import Preference, Medium, BasicComplexityScore, Query
 from openbar_search.search_engine import return_results
 from openbar_users.forms import LoginForm
-from openbar_users.models import Searcher
+from openbar_users.models import Searcher, Folder
 from openbar_users.views import home_view
 
 
@@ -40,9 +40,10 @@ def search(request):
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
             search_results = return_results(search_form.cleaned_data['input'], request.user)
+            data = {'results': search_results}
             if search_form.cleaned_data['source'] == "extension":
-                return render(request, 'search/results_extension.html', {'results': search_results})
-            return render(request, 'search/results.html', {'results': search_results})
+                return render(request, 'search/results_extension.html', data)
+            return render(request, 'search/results.html', data)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 def results(request):
