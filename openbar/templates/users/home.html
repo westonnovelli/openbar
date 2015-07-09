@@ -5,19 +5,6 @@
 {% url 'create_subfolder' as new_subfolder_url %}
 
 {% block body_content %}
-<div style="background-color:#77B140;">
-    <div class="row" style="margin: 0 auto;">
-        <div class="col-md-6 col-md-offset-3">
-            <br>
-            <br>
-            <br>
-            <br>
-            {% include "search/search.html" %}
-        </div>
-    </div>
-    <br>
-    <br>
-</div>
 <div class="container" align="center">
     <form method="POST" action="{% url 'openbar_users.views.create_folder' %}">
         {{ folder_form }}

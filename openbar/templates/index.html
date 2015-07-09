@@ -2,34 +2,42 @@
 
 {% block specific_css %}
 
-{% load staticfiles %}
+    {% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
 
 {% endblock specific_css %}
 {% url 'index' as index_url %}
 
 {% block body_content %}
-<div class="container display-box" align="center">
-        <!-- Logo -->
-        <div class="row">
-            <br>
-            <a href="{{ index_url }}"><img src="{% static 'search/img/openbar_logo.png' %}" width="5%" /></a>
-            <h1 class="logo">open<b>bar</b></h1>
-            <h4>the smarter search engine</h4><br>
+
+
+    <br>
+    <div class="row">
+        <div class="col-md-5" align="right">
+            <img src="{% static 'search/img/openbar_logo.gif' %}" width="12%">
         </div>
+        <div class="col-md-7" align="left">
+            <h1 class="logo" width="100%">open<b>bar</b></h1>
+            <h3 align="justify">breakthrough academic resources</h3><br>
+        </div>
+    </div><br>
+
+    <div class="container display-box" align="center">
+
 
         <!-- Search Bar -->
 
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-12">
                 {% include "search/search.html" %}
-                <br><br>
-
-                <p>
-                    Give it a shot!<br>
-                    Try searching for something that you want breakthrough academic resources on!
-                </p>
             </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container" align="center">
+        <h4>OpenBAR is a search engine that learns with you!</h4>
+        <p>Using machine learning technology, OpenBAR provides you with educational resources that are actually relevant to you.
+        <br>The more you use it, the better the results!</p>
     </div>
 {% endblock body_content %}
