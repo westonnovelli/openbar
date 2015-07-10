@@ -1,6 +1,6 @@
 __author__ = 'westonnovelli'
 from django import forms
-from models import Searcher, Folder
+# from models import Searcher
 
 
 class LoginForm(forms.Form):
@@ -13,7 +13,7 @@ class SearcherForm(forms.Form):
         super(SearcherForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = Searcher
+        # model = Searcher
         fields = ['name']
 
 class FolderForm(forms.Form):

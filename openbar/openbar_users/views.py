@@ -38,8 +38,7 @@ def app_login(request):
 
 
 def login_page(request):
-    login_form = LoginForm()
-    return render(request, 'login/login.html', {'login_form': login_form})
+    return redirect(index)
 
 
 @login_required
@@ -72,8 +71,7 @@ def create_searcher(request):
             searcher.save()
         else:
             return create_account(request)
-    login_form = LoginForm()
-    return render(request, 'index.html', {'login_form': login_form})
+    return redirect(index)
 
 
 @login_required
@@ -143,7 +141,7 @@ def get_folders(request):
             if root is not None:
                 return render(request, 'users/folders.html', {'folders': root.children.all()})
     print "fail"
-    return render(request, 'index.html', {'login_form': LoginForm()})
+    return redirect(index)
 
 @csrf_exempt
 def get_user_complexity_score(request):
@@ -151,6 +149,5 @@ def get_user_complexity_score(request):
     if user_profile is not None:
         searcher = Searcher.objects.get_or_none(user_profile=user_profile)
         if searcher is not None:
-            print searcher.complexity_score.show()
             return render(request, 'cs.html', {'cs': searcher.complexity_score.show()})
     return render(request, 'cs.html', {'cs': ""})

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from openbar.global_util import convert
 import random
+from openbar.main import index
 
 from openbar_search.forms import PreferenceForm, SearchForm
 from openbar_search.models.results_models import Preference, Medium, BoozeComplexityScore, Query
@@ -60,7 +61,7 @@ def increase_complexity_score(request):
         score.save()
         query.save()
         return render(request, 'message.html', {'message': score.show()})
-    return render(request, 'index.html', {'login_form': LoginForm()})
+    return redirect(index)
 
 
 def decrease_complexity_score(request):
@@ -73,7 +74,7 @@ def decrease_complexity_score(request):
         score.save()
         query.save()
         return render(request, 'message.html', {'message': score.show()})
-    return render(request, 'index.html', {'login_form': LoginForm()})
+    return redirect(index)
 
 def set_complexity_score(request):
     query = Query.objects.get_or_none(id=request.GET['id'])
@@ -85,7 +86,7 @@ def set_complexity_score(request):
         score.save()
         query.save()
         return render(request, 'message.html', {'message': score.show()})
-    return render(request, 'index.html', {'login_form': LoginForm()})
+    return redirect(index)
 
 
 def get_random_query(request=None):

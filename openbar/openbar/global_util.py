@@ -1,3 +1,4 @@
+
 __author__ = 'westonnovelli'
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -56,7 +57,6 @@ def booze_convert(level, num_to_drink=True):
         return score_map[count]
     # else:
     #     return () * constant
-
 
 class ChoiceEnum(Enum):
 
