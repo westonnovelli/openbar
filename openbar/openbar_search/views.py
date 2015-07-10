@@ -6,7 +6,7 @@ from openbar.global_util import convert
 import random
 
 from openbar_search.forms import PreferenceForm, SearchForm
-from openbar_search.models.results_models import Preference, Medium, BasicComplexityScore, Query
+from openbar_search.models.results_models import Preference, Medium, BoozeComplexityScore, Query
 from openbar_search.search_engine import return_results
 from openbar_users.forms import LoginForm
 from openbar_users.models import Searcher, Folder
@@ -24,8 +24,7 @@ def add_preference(request):
         y_axis = complexity_score[1:]
 
         medium_obj = Medium.choices()[medium][0]
-        complexity_score_obj, created = BasicComplexityScore.objects.get_or_create(depth_of_material=convert(x_axis, False),
-                                                                                   average_time_to_master=y_axis)
+        complexity_score_obj, created = BoozeComplexityScore.objects.get_or_create(level=complexity_score)
         searcher_obj = Searcher.objects.get_or_none(user_profile=request.user)
         new_preference = Preference(topic=topic,
                                     medium=medium_obj,

@@ -19,6 +19,9 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'openbar.main.index', name='index'),
+
+    url(r'^animate$', 'openbar.main.animate', name='animate'),
+
     url(r'^show_login/$', 'openbar_users.views.login_page', name='show_login'),
     url(r'^accounts/login/$', 'openbar_users.views.app_login', name='login'),
     url(r'^accounts/logout/$', 'openbar_users.views.app_logout', name='logout'),

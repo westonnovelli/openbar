@@ -10,7 +10,7 @@ from forms import LoginForm, SearcherForm, FolderForm
 from models import Searcher, Folder
 from openbar.main import index
 from openbar_search.forms import PreferenceForm
-from openbar_search.models.results_models import Preference, Query, BasicComplexityScore
+from openbar_search.models.results_models import Preference, Query, BoozeComplexityScore
 
 
 @login_required
@@ -66,10 +66,9 @@ def create_searcher(request):
             searcher = Searcher(user_profile=user)
             root_folder = Folder(title="root", owner=searcher)
             root_folder.save()
-            complexity_score = BasicComplexityScore.objects.get_or_create(depth_of_material=random.randint(min, max),
-                                                                          average_time_to_master=random.randint(min, max))
-            complexity_score.save()
+            complexity_score, created = BoozeComplexityScore.objects.get_or_create(level=random.randint(0, 4))
             searcher.complexity_score = complexity_score
+            print searcher
             searcher.save()
         else:
             return create_account(request)
