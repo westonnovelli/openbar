@@ -101,6 +101,7 @@
             data: {id: $("#new_id").val()},
             success: function(result){
                 $("#"+section).html(result);
+                $("#new_id").val('');
             }});
     }
 

@@ -39,6 +39,7 @@ def search(request):
     if request.POST:
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
+
             search_results = return_results(search_form.cleaned_data['input'], request.user)
             data = {'results': search_results}
             if search_form.cleaned_data['source'] == "extension":

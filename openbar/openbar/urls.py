@@ -41,6 +41,8 @@ urlpatterns = [
     url(r'^remove_item/$', 'openbar_users.views.remove_item', name='remove_item'),
     url(r'^remove_subfolder/$', 'openbar_users.views.remove_subfolder', name='remove_subfolder'),
 
+    url(r'^get_user_complexity_score/$', 'openbar_users.views.get_user_complexity_score', name='get_user_cs'),
+
 
     url(r'^voodoo/599aaf818f60edbb2c001784f19217dd/randomize_complexity',
         'openbar_search.complexilizer.randomize_complexity'),

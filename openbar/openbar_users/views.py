@@ -1,4 +1,5 @@
 from collections import defaultdict
+import random
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,8 +8,9 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from forms import LoginForm, SearcherForm, FolderForm
 from models import Searcher, Folder
+from openbar.main import index
 from openbar_search.forms import PreferenceForm
-from openbar_search.models.results_models import Preference, Query
+from openbar_search.models.results_models import Preference, Query, BasicComplexityScore
 
 
 @login_required
@@ -32,7 +34,7 @@ def app_login(request):
                 login(request, user)
         else:
             print "User doesn't exist"
-    return redirect(home_view)
+    return redirect(index)
 
 
 def login_page(request):
@@ -64,6 +66,10 @@ def create_searcher(request):
             searcher = Searcher(user_profile=user)
             root_folder = Folder(title="root", owner=searcher)
             root_folder.save()
+            complexity_score = BasicComplexityScore.objects.get_or_create(depth_of_material=random.randint(min, max),
+                                                                          average_time_to_master=random.randint(min, max))
+            complexity_score.save()
+            searcher.complexity_score = complexity_score
             searcher.save()
         else:
             return create_account(request)
@@ -139,3 +145,13 @@ def get_folders(request):
                 return render(request, 'users/folders.html', {'folders': root.children.all()})
     print "fail"
     return render(request, 'index.html', {'login_form': LoginForm()})
+
+@csrf_exempt
+def get_user_complexity_score(request):
+    user_profile = User.custom_objects.get_or_none(username=request.user)
+    if user_profile is not None:
+        searcher = Searcher.objects.get_or_none(user_profile=user_profile)
+        if searcher is not None:
+            print searcher.complexity_score.show()
+            return render(request, 'cs.html', {'cs': searcher.complexity_score.show()})
+    return render(request, 'cs.html', {'cs': ""})

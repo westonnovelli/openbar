@@ -1,20 +1,9 @@
 {% url 'search' as search_url %}
 {% url 'homepage' as home_url %}
+
 <form action="{{ search_url }}" method="post" class="form-horizontal" role="form">
     <div class="input-group">
-        <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
-            </button>
-            <!--Dropdown-->
-            <ul class="dropdown-menu nav nav-list" id="folders" style="">
-                {% if user.is_authenticated %}
-                    {% include 'users/folders.html' with folders=folders %}
-                {% else %}
-                    <a data-toggle="modal" data-target="#loginModal">Log In</a> to save bookmarks.
-                {% endif %}
-            </ul>
-        </div>
+        {% include 'search/dropdown.html' with folders=folders%}
         {% csrf_token %}
         <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" required id="search" for="search" name="input" autofocus>
         <span class="input-group-btn">
