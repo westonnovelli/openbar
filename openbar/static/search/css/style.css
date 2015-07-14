@@ -76,6 +76,14 @@ a {
  	text-decoration: none;
 }
 
-.dropdown-menu {
-  min-width: 260px;
+.query {
+	text-transform: none; padding: 5px 70px 0px 10px;
+}
+
+.folder {
+  color: black;
+}
+
+ul > li {
+	margin-left: 10px;
 }
