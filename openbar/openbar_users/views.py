@@ -63,7 +63,7 @@ def create_searcher(request):
             user = User(username=name)
             user.save()
             searcher = Searcher(user_profile=user)
-            root_folder = Folder(title="root", owner=searcher)
+            root_folder = Folder(title="Folders", owner=searcher)
             root_folder.save()
             complexity_score, created = BoozeComplexityScore.objects.get_or_create(level=random.randint(0, 4))
             searcher.complexity_score = complexity_score
@@ -87,59 +87,70 @@ def create_folder(request, internal=False):
         print "error"
     if internal:
         return new_folder
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 @csrf_exempt
 def add_subfolder(request):
     folder = create_folder(request, True)
-    parent_id = request.POST['parent']
+    parent_id = request.GET['parent']
     parent = Folder.objects.get_or_none(id=parent_id)
     folder.parent = parent
     folder.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
 @csrf_exempt
 def add_item(request):
-    query = Query.objects.get_or_none(id=request.POST['query'])
-    parent = Folder.objects.get_or_none(id=request.POST['parent'])
+    query = Query.objects.get_or_none(id=request.GET['query'])
+    parent = Folder.objects.get_or_none(id=request.GET['parent'])
     if query is not None and parent is not None:
         parent.items.add(query)
         parent.save()
-        print [(item.title, item.url) for item in parent.items.all()]
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    if request.GET['ajax_source']:
+
+        return render(request, "users/folders.html", {'folders': [get_folders_data(request)], 'dropdown': True})
 
 
 @login_required
 @csrf_exempt
 def remove_item(request):
-    query = Query.objects.get_or_none(id=request.POST['query'])
-    parent = Folder.objects.get_or_none(id=request.POST['parent'])
+    query = Query.objects.get_or_none(id=request.GET['query'])
+    parent = Folder.objects.get_or_none(id=request.GET['parent'])
     if query is not None and parent is not None:
         parent.items.remove(query)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        parent.save()
+    if request.GET['ajax_source']:
+        return render(request, "users/folders.html", {'folders': [get_folders_data(request)], 'dropdown': True})
+
 
 @login_required
 @csrf_exempt
 def remove_subfolder(request):
-    folder = Folder.objects.get_or_none(id=request.POST['folder'])
+    folder = Folder.objects.get_or_none(id=request.GET['folder'])
     folder.parent = None
     folder.delete()
 
 
-@csrf_exempt
-def get_folders(request):
-    username = request.GET['user']
+def get_folders_data(request):
+    try:
+        username = request.GET['user']
+    except:
+        username = request.user
     user_profile = User.custom_objects.get_or_none(username=username)
     if user_profile is not None:
         searcher = Searcher.objects.get_or_none(user_profile=user_profile)
         if searcher is not None:
             root = Folder.objects.get_or_none(owner=searcher, parent=None)
             if root is not None:
-                return render(request, 'users/folders.html', {'folders': root.children.all()})
+                return root
+
+
+@csrf_exempt
+def get_folders(request):
+    root = get_folders_data(request)
+    if root is not None:
+        return render(request, 'users/folders.html', {'folders': [root]})
     print "fail"
     return redirect(index)
 

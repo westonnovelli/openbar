@@ -1,9 +1,12 @@
 {% for folder in folders %}
-<li class="folder"><a class="tree-toggle nav-header folder">{{ folder.title }}</a>
+<li><a class="tree-toggle nav-header folder" style="color:black;"><span class="glyphicon glyphicon-folder-close indicator"></span> {{ folder.title }}</a>
     <ul class="nav nav-list tree">
         {% include "users/folders.html" with folders=folder.children.all %}
         {% for item in folder.items.all %}
-            <li class="query"><a href="{{ item.url }}" class="query" target="_blank">{{ item.title }}</a></li>
+            <li class="query">
+                <a href="{{ item.url }}" class="query" target="_blank" style="color:black;">{{ item.title }}</a>
+                {% include 'search/folder_manage.html' with query=item parent=folder dropdown=folder%}
+            </li>
         {% endfor %}
     </ul>
 </li>

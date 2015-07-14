@@ -30,7 +30,7 @@ def index(request):
         user = User.custom_objects.get_or_none(username=request.user)
         owner = Searcher.objects.get_or_none(user_profile=user)
         if owner is not None:
-            data['folders'] = Folder.objects.get_or_none(owner=owner, parent=None).children.all()
+            data['folders'] = [Folder.objects.get_or_none(owner=owner, parent=None)]
     return render(request, 'index.html', data)
 
 

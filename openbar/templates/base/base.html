@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
 
     <script type="text/javascript" src="{% static 'search/js/jquery-1.11.3.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'search/js/folder_manage.js' %}"></script>
     <style type="text/css">
         .folder {
           color: black;
@@ -39,8 +40,8 @@
               </button>
               <a class="navbar-brand" href="{{ index_url }}" style="letter-spacing:2px;color:white">open<b>bar</b></a>
                 {% if request.get_full_path != index_url %}
-                <div class="navbar-form navbar-left">
-                    {% include 'search/search.html' %}
+                <div class="navbar-form navbar-left"">
+                    {% include 'search/search.html' with folders=folders%}
                 </div>
             {%  endif  %}
             </div>

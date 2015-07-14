@@ -1,17 +1,18 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from openbar.global_util import convert
 import random
-from openbar.main import index
+from openbar.main import index, get_score_rank
 
 from openbar_search.forms import PreferenceForm, SearchForm
 from openbar_search.models.results_models import Preference, Medium, BoozeComplexityScore, Query
 from openbar_search.search_engine import return_results
 from openbar_users.forms import LoginForm
 from openbar_users.models import Searcher, Folder
-from openbar_users.views import home_view
+from openbar_users.views import home_view, get_folders_data
 
 
 @login_required
@@ -34,21 +35,36 @@ def add_preference(request):
         new_preference.save()
     return redirect(home_view)
 
+
+def get_searcher(request):
+    return Searcher.objects.filter(user_profile=request.user)[0]
+
+
+def add_root_folder(request, data):
+    if request.user.is_authenticated():
+        root = Folder.objects.get(owner=get_searcher(request), parent=None)
+        data['root'] = root
+        data['folders'] = [root]
+
+
 @csrf_exempt
 def search(request):
     if request.POST:
         search_form = SearchForm(request.POST)
         if search_form.is_valid():
-
             search_results = return_results(search_form.cleaned_data['input'], request.user)
             data = {'results': search_results}
+            data['ordered_score_list'] = get_score_rank()
+            add_root_folder(request, data)
+            data['login_form'] = LoginForm()
             if search_form.cleaned_data['source'] == "extension":
                 return render(request, 'search/results_extension.html', data)
             return render(request, 'search/results.html', data)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 def results(request):
-    return render(request, 'search/results.html')
+    return render(request, 'search/results.html', {'folders': get_folders_data(request), 'login_form': LoginForm()})
 
 
 def increase_complexity_score(request):
@@ -87,7 +103,6 @@ def set_complexity_score(request):
         query.save()
         return render(request, 'message.html', {'message': score.show()})
     return redirect(index)
-
 
 def get_random_query(request=None):
     randomQ = None

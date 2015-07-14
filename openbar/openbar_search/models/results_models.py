@@ -91,6 +91,8 @@ class BoozeComplexityScore(ComplexityScore):
     """
     level = models.IntegerField()
     radius = 2
+    min = 0
+    max = 4
     score_differential = complexity_constant()/2
     objects = MainManager()
 
@@ -114,12 +116,16 @@ class BoozeComplexityScore(ComplexityScore):
         Increases the complexity score by a standard amount.
         """
         self.level += self.score_differential/2
+        if self.level > max:
+            self.level = max
 
     def decrease_complexity_score(self):
         """
         Decreases the complexity score by a standard amount.
         """
         self.level -= self.score_differential/2
+        if self.level < min:
+            self.level = min
 
     def set_complexity_score(self, score):
         """
