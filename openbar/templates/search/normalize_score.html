@@ -30,30 +30,14 @@
     </div>
 </div>
 <script type="text/javascript">
-    function adj(direction, amount) {
-        url = "{% url 'openbar_search.views.set_complexity_score' %}";
-        if (direction == "greater") {
-            url = "{% url 'openbar_search.views.increase_complexity_score' %}";
-        } else if (direction == "less") {
-            url = "{% url 'openbar_search.views.decrease_complexity_score' %}";
-        }
-        $.ajax({
-            url: url,
-            data: {id: $(document).find("#second > span").text(), amount: amount},
-            success: function(result){
-                console.log(result);
-            }
-        });
-        get_new_query("second");
-    }
-
     $("#wlt").click(function() {
         $.ajax({
             url: "{% url 'openbar_search.views.set_complexity_score' %}",
             data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
             success: function(result){
                 console.log(result);
-                adj("greater", 2);
+                adj($(document).find("#second > span").text(), "greater", 2);
+                get_new_query("second");
             }
         });
     });
@@ -64,7 +48,8 @@
             data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
             success: function(result){
                 console.log(result);
-                adj("greater", 1);
+                adj($(document).find("#second > span").text(), "greater", 1);
+                get_new_query("second");
             }
         });
     });
@@ -75,7 +60,8 @@
             data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
             success: function(result){
                 console.log(result);
-                adj("less", 2);
+                adj($(document).find("#second > span").text(), "less", 2);
+                get_new_query("second");
             }
         });
     });
@@ -86,7 +72,8 @@
             data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
             success: function(result){
                 console.log(result);
-                adj("less", 1);
+                adj($(document).find("#second > span").text(), "less", 1);
+                get_new_query("second");
             }
         });
     });
@@ -94,16 +81,6 @@
     $("#same").click(function() {
        adj("same", $(document).find("#first > span").text());
     });
-
-    function get_new_query(section) {
-        $.ajax({
-            url: "{% url 'openbar_search.views.get_random_query'%}",
-            data: {id: $("#new_id").val()},
-            success: function(result){
-                $("#"+section).html(result);
-                $("#new_id").val('');
-            }});
-    }
 
     $("#next").click(function() {
         get_new_query("first");

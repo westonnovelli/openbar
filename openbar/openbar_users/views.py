@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from forms import LoginForm, SearcherForm, FolderForm
-from models import Searcher, Folder
+from models import Searcher, Folder, FollowedLink
 from openbar.main import index
 from openbar_search.forms import PreferenceForm
 from openbar_search.models.results_models import Preference, Query, BoozeComplexityScore
@@ -16,7 +16,7 @@ from openbar_search.models.results_models import Preference, Query, BoozeComplex
 @login_required
 def home_view(request):
     searcher = Searcher.objects.filter(user_profile=request.user)
-    preferences = Preference.objects.filter() #searcher=searcher)
+    preferences = Preference.objects.filter()  #searcher=searcher)
     folders = Folder.objects.filter(owner=searcher)
     return render(request, 'users/home.html', {'preferences': preferences,
                                                'preference_form': PreferenceForm(),
@@ -162,3 +162,18 @@ def get_user_complexity_score(request):
         if searcher is not None:
             return render(request, 'cs.html', {'cs': searcher.complexity_score.show()})
     return render(request, 'cs.html', {'cs': ""})
+
+def get_searcher(request):
+    return Searcher.objects.filter(user_profile=request.user)[0]
+
+@login_required
+@csrf_exempt
+def follow_link(request):
+    searcher = get_searcher(request)
+    message = "Failed to get user"
+    if searcher is not None:
+        query = Query.objects.get(id=request.GET['query'])
+        followed_link = FollowedLink(link=query, owner=searcher)
+        followed_link.save()
+        message = "Saved link: %s" % query.id
+    return render(request, 'message.html', {'message': message})

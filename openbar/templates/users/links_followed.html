@@ -1,0 +1,43 @@
+<button type="button" class="btn btn-default navbar-btn openbar-dropdown openbar-dropdown-followed-links" aria-haspopup="true" aria-expanded="false">
+    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+</button>
+<div class="input-group-btn dropdown openbar-dropdown openbar-dropdown-followed-links">
+    <!--Dropdown-->
+    <ul class="dropdown-menu openbar-dropdown-menu openbar-dropdown-menu-followed-links">
+        <li>
+            <ul class="list-unstyled nav nav-list">
+                {% for link in followed_links %}
+                    <li>
+                        <a class="followable-link" href="{{ link.url }}" data-query-id="{{ link.id }}">{{ link.title }}</a>
+                        <div data-query-id="{{ link.id }}">
+                            <button class="adjust adjust-less">This was too easy.</button>
+                            <button class="adjust adjust-just-right">This was just right!</button>
+                            <button class="adjust adjust-more">This was too hard.</button>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $('button.openbar-dropdown-followed-links').on('click', function(event) {
+        $(".openbar-dropdown-followed-links").toggleClass('open');
+    });
+
+    function decrease_complexity(id) {
+        adj(id, "less", 1);
+    }
+
+    function increase_complexity(id) {
+        adj(id, "greater", 1);
+    }
+
+    $('.adjust-less').on('click', function(event) {
+        decrease_complexity($(this).parent().data("query-id"));
+    });
+
+    $('.adjust-more').on('click', function(event) {
+        increase_complexity($(this).parent().data("query-id"));
+    });
+</script>

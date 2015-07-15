@@ -19,3 +19,9 @@ class Folder(models.Model):
     items = models.ManyToManyField(Query)
     owner = models.ForeignKey(Searcher)
     objects = MainManager()
+
+class FollowedLink(models.Model):
+    owner = models.ForeignKey(Searcher, related_name='links_followed')
+    link = models.ForeignKey(Query)
+    date_followed = models.DateTimeField(auto_now_add=True)
+    objects = MainManager()

@@ -1,5 +1,5 @@
-<div class="input-group-btn dropdown openbar-dropdown">
-    <button type="button" class="btn btn-default openbar-dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="input-group-btn dropdown openbar-dropdown openbar-dropdown-folder">
+    <button type="button" class="btn btn-default openbar-dropdown openbar-dropdown-folder" aria-haspopup="true" aria-expanded="false">
         <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
     </button>
     <!--Dropdown-->
@@ -19,8 +19,8 @@
     </ul>
 </div>
 <script>
-    $('button.openbar-dropdown').on('click', function (event) {
-        $(".openbar-dropdown").toggleClass('open');
+    $('button.openbar-dropdown-folder').on('click', function (event) {
+        $(".openbar-dropdown-folder").toggleClass('open');
     });
 
     $('body').on('click', function (e) {

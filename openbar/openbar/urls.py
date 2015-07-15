@@ -33,8 +33,6 @@ urlpatterns = [
     url(r'^results/$', 'openbar_search.views.results', name='results'),
     url(r'^increase_complexity_score', 'openbar_search.views.increase_complexity_score', name='increase_complexity_query'),
     url(r'^decrease_complexity_score', 'openbar_search.views.decrease_complexity_score', name='decrease_complexity_query'),
-    # url(r'^searcher/{id}/increase_complexity_score', 'openbar_search.views.increase_complexity_score', name='increase_complexity_searcher'),
-    # url(r'^searcher/{id}/decrease_complexity_score', 'openbar_search.views.increase_complexity_score', name='decrease_complexity_searcher'),
     url(r'^set_complexity_score', 'openbar_search.views.set_complexity_score', name='set_complexity_query'),
 
 
@@ -45,6 +43,8 @@ urlpatterns = [
     url(r'^remove_subfolder/$', 'openbar_users.views.remove_subfolder', name='remove_subfolder'),
 
     url(r'^get_user_complexity_score/$', 'openbar_users.views.get_user_complexity_score', name='get_user_cs'),
+
+    url(r'^follow_link/$', 'openbar_users.views.follow_link', name='follow_link'),
 
 
     url(r'^voodoo/599aaf818f60edbb2c001784f19217dd/randomize_complexity',

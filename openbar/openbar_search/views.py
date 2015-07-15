@@ -87,8 +87,8 @@ def decrease_complexity_score(request):
         score = query.complexity_score
         for i in range(val):
             score.decrease_complexity_score()
-        score.save()
         query.save()
+        print "done"
         return render(request, 'message.html', {'message': score.show()})
     return redirect(index)
 

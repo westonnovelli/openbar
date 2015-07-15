@@ -13,6 +13,33 @@
 
     <script type="text/javascript" src="{% static 'search/js/jquery-1.11.3.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'search/js/folder_manage.js' %}"></script>
+    <script type="text/javascript">
+        function get_new_query(section) {
+            $.ajax({
+                url: "{% url 'openbar_search.views.get_random_query'%}",
+                data: {id: $("#new_id").val()},
+                success: function(result){
+                    $("#"+section).html(result);
+                    $("#new_id").val('');
+                }});
+        }
+
+        function adj(id, direction, amount) {
+            url = "{% url 'openbar_search.views.set_complexity_score' %}";
+            if (direction == "greater") {
+                url = "{% url 'openbar_search.views.increase_complexity_score' %}";
+            } else if (direction == "less") {
+                url = "{% url 'openbar_search.views.decrease_complexity_score' %}";
+            }
+            $.ajax({
+                url: url,
+                data: {id: id, amount: amount},
+                success: function(result){
+                    console.log(result);
+                }
+            });
+        }
+    </script>
     {% block specific_css %}
     {% endblock specific_css %}
 </head>
@@ -51,6 +78,9 @@
                             <span class="badge" id="user_cs" data-toggle="modal" data-target="#complexitymodal"></span>
                         </p></li>
                     <li>
+                    <li>
+                      {% include 'users/links_followed.html' %}
+                    </li>
                         <li><button type="button" class="btn btn-default navbar-btn" href="#!" onclick="document.getElementById('logout_form').submit()">Log Out</button></li>
                     </li>
                     <form action="{{ logout_url }}" id="logout_form">

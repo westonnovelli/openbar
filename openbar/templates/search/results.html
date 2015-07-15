@@ -2,19 +2,15 @@
 {% load staticfiles %}
 
 {% block specific_css %}
-
-    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
-
+<link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
 {% endblock specific_css %}
-
 {% block body_content %}
-
     <div class="container">
         <ul class="list-group">
             {% for result in results %}
                 <li class="list-group-item">
                     <span class="badge">{{ result.query.complexity_score.show }}</span>
-                    <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
+                    <a class="followable-link" data-query-id="{{ result.query.id }}" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
                         <small>{{ result.query.short_form }}</small></h5><span hidden>{{ result.query.id }}</span></a>
                     {% if user.is_authenticated %}
                         {% include 'search/folder_manage.html' with query=result.query parent=root folders=folders%}
@@ -23,7 +19,19 @@
             {% endfor %}
         </ul>
     </div>
-
 {% endblock body_content %}
 {% block specific_js %}
+{% if user.is_authenticated %}
+    <script type="text/javascript">
+        $(".followable-link").on('click', function(event) {
+            $.ajax({
+                url: "{% url 'openbar_users.views.follow_link' %}",
+                data: {"query": $(this).data("query-id")},
+                success: function(result) {
+                    console.log(result);
+                }
+            });
+        });
+    </script>
+{% endif %}
 {% endblock specific_js %}
