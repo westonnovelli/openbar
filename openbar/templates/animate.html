@@ -1,0 +1,116 @@
+{% extends 'base/base.html' %}
+
+{% block specific_css %}
+
+    {% load staticfiles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
+
+{% endblock specific_css %}
+{% url 'index' as index_url %}
+
+{% block body_content %}
+<style type="text/css">
+
+    #glass {
+        z-index: 10;
+        position: absolute;
+        animation: slidedown, rotate;
+        animation-duration: 1s, 1.8s;
+        animation-delay: 2s, 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        -webkit-animation: slidedown, rotate;
+        -webkit-animation-duration: 1s, 1.8s;
+        -webkit-animation-delay: 2s, 3s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+        margin: auto;
+        transform: translate(-3px, -13px) rotate(45deg) scale(.7, .7);
+    }
+
+    @keyframes slidedown {
+        100%   { transform: translate(-147px, 148px) scale(2, 2) rotate(45deg);}
+    }
+
+    @keyframes rotate {
+        0%   { transform: translate(-147px, 148px) scale(2, 2) rotate(45deg);}
+        100% { transform: translate(-147px, 148px) scale(2, 2); }
+    }
+
+    #handle {
+        z-index: -10;
+        animation: handle;
+        animation-duration: 1s;
+        animation-delay: 2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        -webkit-animation: handle;
+        -webkit-animation-duration: 1s;
+        -webkit-animation-delay: 2s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+        transform-origin: left;
+        transform: translate(73px, -2px) rotate(45deg) scale(.6, .6);
+    }
+
+    @keyframes handle {
+        50%   { transform: translate(-40px, 143px); }
+        100%  { transform-origin: top left; transform: scale(9, 2) translate(-4px, 40px);}
+    }
+
+    #searchbar {
+        width: 700px;
+        left: 430px;
+        top: 304px;
+        position: absolute;
+        opacity:0;
+        animation: fadein ease-in 1;
+        animation-duration: 1.8s;
+        animation-delay: 3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        -webkit-animation: fadein ease-in 1;
+        -webkit-animation-duration: 1.8s;
+        -webkit-animation-delay: 3s;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-fill-mode: forwards;
+    }
+
+    @keyframes fadein {
+        from { opacity:0; }
+        to { opacity:1; }
+    }
+
+
+</style>
+
+<div id="asdanimation-container" style="padding-left:40px">
+
+</div>
+    <br>
+    <div class="row">
+        <div class="col-md-5" align="right">
+            <img id="glass" src="{% static 'search/img/openbar-search_logo-glass.png' %}" width="18%">
+            <img id="handle" src="{% static 'search/img/openbar-search_logo-handle.png' %}" width="18%">
+        </div>
+        <div class="col-md-7" align="left">
+            <h1 class="logo" width="100%">open<b>bar</b></h1>
+            <h3 align="justify">breakthrough academic resources</h3><br>
+        </div>
+    </div><br>
+
+    <div class="container" align="center" style="height: 80px;">
+        <div class="row" id="searchbar">
+            <div class="col-md-12">
+                {% include 'search/animate.html' %}
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container" align="center">
+        <h4>OpenBAR is a search engine that learns with you!</h4>
+        <p>Using machine learning technology, OpenBAR provides you with educational resources that are actually relevant to you.
+        <br>The more you use it, the better the results!</p>
+    </div>
+{% endblock body_content %}

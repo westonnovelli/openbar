@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from openbar_search.models.results_models import Query, Result
+from openbar_users.models import Searcher
 
 __author__ = 'westonnovelli'
 
@@ -40,6 +42,9 @@ def return_results(search_terms, user):
     for result in raw_results:
         final_results[result] = Result(result)
     keyword_filter(final_results, search_terms.lower().split(' '))
-    # if user is not None:
-        # complexity_filter(final_results, user)
+    user_profile = User.custom_objects.get_or_none(username=user)
+    if user_profile is not None:
+        searcher = Searcher.objects.get_or_none(user_profile=user_profile)
+        if searcher is not None:
+            complexity_filter(final_results, searcher)
     return rank(final_results)

@@ -1,12 +1,16 @@
+from collections import defaultdict
+import random
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from forms import LoginForm, SearcherForm, FolderForm
 from models import Searcher, Folder
+from openbar.main import index
 from openbar_search.forms import PreferenceForm
-from openbar_search.models.results_models import Preference, Query
+from openbar_search.models.results_models import Preference, Query, BoozeComplexityScore
 
 
 @login_required
@@ -30,12 +34,11 @@ def app_login(request):
                 login(request, user)
         else:
             print "User doesn't exist"
-    return redirect(home_view)
+    return redirect(index)
 
 
 def login_page(request):
-    login_form = LoginForm()
-    return render(request, 'login/login.html', {'login_form': login_form})
+    return redirect(index)
 
 
 @login_required
@@ -60,16 +63,19 @@ def create_searcher(request):
             user = User(username=name)
             user.save()
             searcher = Searcher(user_profile=user)
-            root_folder = Folder(title="root", owner=searcher)
+            root_folder = Folder(title="Folders", owner=searcher)
             root_folder.save()
+            complexity_score, created = BoozeComplexityScore.objects.get_or_create(level=random.randint(0, 4))
+            searcher.complexity_score = complexity_score
+            print searcher
             searcher.save()
         else:
             return create_account(request)
-    login_form = LoginForm()
-    return render(request, 'index.html', {'login_form': login_form})
+    return redirect(index)
 
 
 @login_required
+@csrf_exempt
 def create_folder(request, internal=False):
     folder_form = FolderForm(request.POST or None)
     if folder_form is not None and folder_form.is_valid():
@@ -81,38 +87,78 @@ def create_folder(request, internal=False):
         print "error"
     if internal:
         return new_folder
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
+@csrf_exempt
 def add_subfolder(request):
     folder = create_folder(request, True)
-    parent_id = request.POST['parent']
+    parent_id = request.GET['parent']
     parent = Folder.objects.get_or_none(id=parent_id)
     folder.parent = parent
     folder.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
+@csrf_exempt
 def add_item(request):
-    query = Query.objects.get_or_none(id=request.POST['query'])
-    parent = Folder.objects.get_or_none(id=request.POST['parent'])
+    query = Query.objects.get_or_none(id=request.GET['query'])
+    parent = Folder.objects.get_or_none(id=request.GET['parent'])
     if query is not None and parent is not None:
         parent.items.add(query)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        parent.save()
+    if request.GET['ajax_source']:
+
+        return render(request, "users/folders.html", {'folders': [get_folders_data(request)], 'dropdown': True})
 
 
 @login_required
+@csrf_exempt
 def remove_item(request):
-    query = Query.objects.get_or_none(id=request.POST['query'])
-    parent = Folder.objects.get_or_none(id=request.POST['parent'])
+    query = Query.objects.get_or_none(id=request.GET['query'])
+    parent = Folder.objects.get_or_none(id=request.GET['parent'])
     if query is not None and parent is not None:
         parent.items.remove(query)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        parent.save()
+    if request.GET['ajax_source']:
+        return render(request, "users/folders.html", {'folders': [get_folders_data(request)], 'dropdown': True})
+
 
 @login_required
+@csrf_exempt
 def remove_subfolder(request):
-    folder = Folder.objects.get_or_none(id=request.POST['folder'])
+    folder = Folder.objects.get_or_none(id=request.GET['folder'])
     folder.parent = None
     folder.delete()
+
+
+def get_folders_data(request):
+    try:
+        username = request.GET['user']
+    except:
+        username = request.user
+    user_profile = User.custom_objects.get_or_none(username=username)
+    if user_profile is not None:
+        searcher = Searcher.objects.get_or_none(user_profile=user_profile)
+        if searcher is not None:
+            root = Folder.objects.get_or_none(owner=searcher, parent=None)
+            if root is not None:
+                return root
+
+
+@csrf_exempt
+def get_folders(request):
+    root = get_folders_data(request)
+    if root is not None:
+        return render(request, 'users/folders.html', {'folders': [root]})
+    print "fail"
+    return redirect(index)
+
+@csrf_exempt
+def get_user_complexity_score(request):
+    user_profile = User.custom_objects.get_or_none(username=request.user)
+    if user_profile is not None:
+        searcher = Searcher.objects.get_or_none(user_profile=user_profile)
+        if searcher is not None:
+            return render(request, 'cs.html', {'cs': searcher.complexity_score.show()})
+    return render(request, 'cs.html', {'cs': ""})

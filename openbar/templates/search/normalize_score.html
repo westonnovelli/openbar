@@ -1,0 +1,112 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block specific_css %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
+
+{% endblock specific_css %}
+
+{% block body_content %}
+<div class="container">
+    <div class="row">
+        <input type="text" name="new_id" id="new_id">
+        <button id="next" type="submit">Next</button>
+    </div>
+    <div class="row" style="padding: 30px;" id="first">
+        {{ first.title }} - {{ first.complexity_score.show }}
+        <span hidden>{{ first.id }}</span>
+    </div>
+    <div class="row">
+        <button id="wlt">Waaaaay Easier than</button>
+        <button id="lt">Easier than</button>
+        <button id="same">About the same as</button>
+        <button id="gt">Harder than</button>
+        <button id="wgt">Waaaaaay Harder than</button>
+    </div>
+    <div class="row" style="padding: 30px;" id="second">
+        {{ second.title }} - {{ first.complexity_score.show }}
+        <span hidden>{{ second.id }}</span>
+    </div>
+</div>
+<script type="text/javascript">
+    function adj(direction, amount) {
+        url = "{% url 'openbar_search.views.set_complexity_score' %}";
+        if (direction == "greater") {
+            url = "{% url 'openbar_search.views.increase_complexity_score' %}";
+        } else if (direction == "less") {
+            url = "{% url 'openbar_search.views.decrease_complexity_score' %}";
+        }
+        $.ajax({
+            url: url,
+            data: {id: $(document).find("#second > span").text(), amount: amount},
+            success: function(result){
+                console.log(result);
+            }
+        });
+        get_new_query("second");
+    }
+
+    $("#wlt").click(function() {
+        $.ajax({
+            url: "{% url 'openbar_search.views.set_complexity_score' %}",
+            data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
+            success: function(result){
+                console.log(result);
+                adj("greater", 2);
+            }
+        });
+    });
+
+    $("#lt").click(function() {
+        $.ajax({
+            url: "{% url 'openbar_search.views.set_complexity_score' %}",
+            data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
+            success: function(result){
+                console.log(result);
+                adj("greater", 1);
+            }
+        });
+    });
+
+    $("#wgt").click(function() {
+        $.ajax({
+            url: "{% url 'openbar_search.views.set_complexity_score' %}",
+            data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
+            success: function(result){
+                console.log(result);
+                adj("less", 2);
+            }
+        });
+    });
+
+    $("#gt").click(function() {
+       $.ajax({
+            url: "{% url 'openbar_search.views.set_complexity_score' %}",
+            data: {id: $(document).find("#second > span").text(), amount: $(document).find("#first > span").text()},
+            success: function(result){
+                console.log(result);
+                adj("less", 1);
+            }
+        });
+    });
+
+    $("#same").click(function() {
+       adj("same", $(document).find("#first > span").text());
+    });
+
+    function get_new_query(section) {
+        $.ajax({
+            url: "{% url 'openbar_search.views.get_random_query'%}",
+            data: {id: $("#new_id").val()},
+            success: function(result){
+                $("#"+section).html(result);
+                $("#new_id").val('');
+            }});
+    }
+
+    $("#next").click(function() {
+        get_new_query("first");
+    });
+</script>
+{% endblock body_content %}

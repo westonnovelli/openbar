@@ -3,7 +3,7 @@
 
 <form action="{{ search_url }}" method="post" class="form-horizontal" role="form">
     <div class="input-group">
-        {% include 'search/dropdown.html' with folders=folders%}
+        {% include 'search/dropdown.html' with folders=folders %}
         {% csrf_token %}
         <input type="text" class="form-control" aria-label="..." placeholder="Get a drink?" required id="search" for="search" name="input" autofocus>
         <span class="input-group-btn">
@@ -24,8 +24,10 @@
             $('.tree-toggle').parent().children('ul.tree').toggle(200);
           })
         }
-
         $(document).ready(function() {
+//            $('.dropdown-menu').click(function(event) {
+//                 event.stopPropagation();
+//              });​
            set_menu();
         });
     </script>

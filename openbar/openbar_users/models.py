@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from openbar.global_util import MainManager
-from openbar_search.models.results_models import BasicComplexityScore, Query
+from openbar_search.models.results_models import BoozeComplexityScore, Query
 
 user_manager = MainManager()
 user_manager.contribute_to_class(User, 'custom_objects')
@@ -9,7 +9,7 @@ user_manager.contribute_to_class(User, 'custom_objects')
 
 class Searcher(models.Model):
     user_profile = models.OneToOneField(User, primary_key=True)
-    complexity_score = models.ForeignKey(BasicComplexityScore, null=True)
+    complexity_score = models.ForeignKey(BoozeComplexityScore, null=True)
     objects = MainManager()
 
 

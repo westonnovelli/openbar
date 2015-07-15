@@ -1,5 +1,5 @@
 from django.db import models
-from openbar.global_util import convert, MainManager, complexity_constant
+from openbar.global_util import convert, MainManager, complexity_constant, booze_convert
 from math import hypot
 
 class ComplexityScore(models.Model):
@@ -85,6 +85,61 @@ class BasicComplexityScore(ComplexityScore):
         self.average_time_to_master = score.average_time_to_master + self.score_differential
 
 
+class BoozeComplexityScore(ComplexityScore):
+    """
+    A Basic Complexity score will be a plotting of average time to master vs. depth of material
+    """
+    level = models.IntegerField()
+    radius = 2
+    min = 0
+    max = 4
+    score_differential = complexity_constant()/2
+    objects = MainManager()
+
+    def __unicode__(self):
+        return booze_convert(self.level)
+
+    def show(self):
+        return booze_convert(self.level)
+
+    def is_close(self, other_score):
+        dist = self.distance_to(other_score)
+        if dist <= self.radius:
+            return True, dist
+        return False, dist
+
+    def distance_to(self, other_score):
+        return abs(self.level - other_score.level)
+
+    def increase_complexity_score(self):
+        """
+        Increases the complexity score by a standard amount.
+        """
+        self.level += self.score_differential/2
+        if self.level > max:
+            self.level = max
+
+    def decrease_complexity_score(self):
+        """
+        Decreases the complexity score by a standard amount.
+        """
+        self.level -= self.score_differential/2
+        if self.level < min:
+            self.level = min
+
+    def set_complexity_score(self, score):
+        """
+        Sets the complexity score
+        """
+        self.level += score.level
+
+    def set_less_complex_than(self, score):
+        self.level = score.level - self.score_differential
+
+    def set_more_complex_than(self, score):
+        self.level = score.level + self.score_differential
+
+
 class Query(models.Model):
     """
     Query data
@@ -93,7 +148,7 @@ class Query(models.Model):
     media = models.TextField()
     subject = models.TextField()
     title = models.TextField()      # This may change
-    complexity_score = models.ForeignKey(BasicComplexityScore, null=True)
+    complexity_score = models.ForeignKey(BoozeComplexityScore, null=True)
     short_form = models.CharField(max_length=140, default="Preview of the page")
     objects = MainManager()
 
@@ -139,7 +194,7 @@ class Preference(models.Model):
     """
     topic = models.ForeignKey(Topic)
     medium = models.CharField(max_length=1, choices=Medium.choices())
-    complexity_score = models.ForeignKey(BasicComplexityScore)
+    complexity_score = models.ForeignKey(BoozeComplexityScore)
     # searcher = models.ForeignKey(Searcher)
     objects = MainManager()
 

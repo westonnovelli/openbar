@@ -1,9 +1,10 @@
-<div>
-    <ul>
+<div class="container">
+    <ul class="list-group">
         {% for result in results %}
-            <li>
-                <a href="{{ result.query.url }}"><p>{{ result.query.title }}</p></a>
-                {{ result.query.complexity_score.show }}
+            <li class="list-group-item">
+                <span class="badge">{{ result.query.complexity_score.show }}</span>
+                <!--<span class="badge">{{ result.query.id }}</span>-->
+                <a href="{{ result.query.url }}"><h5>{{ result.query.title }}</h5></a>
             </li>
         {% endfor %}
     </ul>

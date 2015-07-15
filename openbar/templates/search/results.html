@@ -13,16 +13,17 @@
         <ul class="list-group">
             {% for result in results %}
                 <li class="list-group-item">
-                    <div class="">
-                        <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
-                            <small>{{ result.query.short_form }}</small></h5></a>
-                    </div>
-                    <div class="">
-                        {{ result.query.complexity_score.show }}
-                    </div>
+                    <span class="badge">{{ result.query.complexity_score.show }}</span>
+                    <a class="" href="{{ result.query.url }}"><h5>{{ result.query.title }}<br>
+                        <small>{{ result.query.short_form }}</small></h5><span hidden>{{ result.query.id }}</span></a>
+                    {% if user.is_authenticated %}
+                        {% include 'search/folder_manage.html' with query=result.query parent=root folders=folders%}
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
     </div>
 
 {% endblock body_content %}
+{% block specific_js %}
+{% endblock specific_js %}

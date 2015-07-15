@@ -70,15 +70,20 @@ h4 {
     padding: .2em .4em;
     margin: .8em 0 .2em;
     line-height: 1.5;
-  }
+}
 
 a {
  	text-decoration: none;
- }
+}
 
- .dropdown-menu li {
- 	line-height: 120%;
- }
+.query {
+	text-transform: none; padding: 5px 70px 0px 10px;
+}
 
+.folder {
+  color: black;
+}
 
-
+ul > li {
+	margin-left: 10px;
+}

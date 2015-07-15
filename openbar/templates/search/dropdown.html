@@ -1,0 +1,49 @@
+<div class="input-group-btn dropdown openbar-dropdown">
+    <button type="button" class="btn btn-default openbar-dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+    </button>
+    <!--Dropdown-->
+    <ul class="dropdown-menu openbar-dropdown-menu">
+        <li>
+            <!--<ul class="list-unstyled">-->
+                <!--<li><input type="checkbox" value=""><label>Mathematics</label></li>-->
+            <!--</ul>-->
+            <ul class="list-unstyled nav nav-list folders" id="folders">
+                {% if user.is_authenticated %}
+                    {% include 'users/folders.html' with folders=folders %}
+                {% else %}
+                    <a data-toggle="modal" data-target="#loginModal">Log In</a> to save bookmarks.
+                {% endif %}
+            </ul>
+        </li>
+    </ul>
+</div>
+<script>
+    $('button.openbar-dropdown').on('click', function (event) {
+        $(".openbar-dropdown").toggleClass('open');
+    });
+
+    $('body').on('click', function (e) {
+        if (!$('.openbar-dropdown-menu').is(e.target)
+            && $('.openbar-dropdown-menu').has(e.target).length === 0
+            && $('.open').has(e.target).length === 0
+        ) {
+            $('.openbar-dropdown').removeClass('open');
+        }
+    });
+
+    function update_indicator() {
+        $(".indicator").toggleClass("glyphicon-folder-close");
+        $(".indicator").toggleClass("glyphicon-folder-open");
+    }
+
+    function set_click_handlers() {
+         $('.folder').on('click', function(event) {
+             console.log("clicked folder");
+             update_indicator();
+        });
+        set_menu();
+    }
+
+    set_click_handlers();
+</script>
