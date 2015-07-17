@@ -1,9 +1,9 @@
 <div class="input-group-btn dropdown openbar-dropdown openbar-dropdown-folder">
     <button type="button" class="btn btn-default openbar-dropdown openbar-dropdown-folder" aria-haspopup="true" aria-expanded="false">
-        <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+        <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
     </button>
     <!--Dropdown-->
-    <ul class="dropdown-menu openbar-dropdown-menu">
+    <ul class="dropdown-menu openbar-dropdown-menu" style="padding-right:10px">
         <li>
             <!--<ul class="list-unstyled">-->
                 <!--<li><input type="checkbox" value=""><label>Mathematics</label></li>-->
@@ -12,7 +12,7 @@
                 {% if user.is_authenticated %}
                     {% include 'users/folders.html' with folders=folders %}
                 {% else %}
-                    <a data-toggle="modal" data-target="#loginModal">Log In</a> to save bookmarks.
+                    <a data-toggle="modal" data-target="#loginModal" href="#!">Log In</a> to save bookmarks.
                 {% endif %}
             </ul>
         </li>

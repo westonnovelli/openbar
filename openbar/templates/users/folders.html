@@ -1,12 +1,13 @@
 {% for folder in folders %}
-<li><a class="tree-toggle nav-header folder" style="color:black;"><span class="glyphicon glyphicon-folder-close indicator"></span> {{ folder.title }}</a>
+<li><a class="tree-toggle nav-header folder" style="color:black;"><span class="glyphicon glyphicon-folder-close indicator"></span>&nbsp;&nbsp;{{ folder.title }}</a>
     <ul class="nav nav-list tree list-group">
         {% include "users/folders.html" with folders=folder.children.all %}
         {% for item in folder.items.all %}
+
             <li class="query list-group-item">
-                <span class="badge" style="z-index: 2">{{ item.complexity_score }}</span>
+                <span class="badge" style="margin-top:10px">{{ item.complexity_score }}</span>
                 <a href="{{ item.url }}" class="query" target="_blank" style="color:black; text-transform: none; margin-right: 70px;">{{ item.title }}</a>
-                <div align="right">
+                <div style="margin-left:30px">
                     {% include 'search/folder_manage.html' with query=item parent=folder dropdown=folder%}
                 </div>
             </li>

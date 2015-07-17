@@ -1,29 +1,29 @@
-<button type="button" class="btn btn-default navbar-btn openbar-dropdown openbar-dropdown-followed-links" aria-haspopup="true" aria-expanded="false">
-    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
-</button>
-<div class="input-group-btn dropdown openbar-dropdown openbar-dropdown-followed-links">
-    <!--Dropdown-->
-    <ul class="dropdown-menu openbar-dropdown-menu openbar-dropdown-followed-links">
-        <li>
-            <ul class="list-unstyled nav nav-list">
-                {% for link in followed_links %}
-                    <li>
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle navbar-btn openbar-dropdown openbar-dropdown-followed-links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+  </button>
+  <ul class="dropdown-menu openbar-dropdown-menu openbar-dropdown-followed-links">
+            <li>
+                <ul class="list-unstyled nav nav-list">
+                    {% for link in followed_links %}
+                        <li>
 
-                        <a class="followable-link" href="{{ link.link.url }}" data-query-id="{{ link.link.id }}" style="color:black; text-transform: none;">
-                            {{ link.link.title }} | {{ link.date_followed }}<span class="badge" style="margin-left:8px;">{{ link.link.complexity_score.show }}</span></a>
-                        {% if not link.reviewed %}
-                            <div data-query-id="{{ link.link.id }}" data-followed-link-id="{{ link.id }}">
-                                <button class="adjust adjust-less">This was too easy.</button>
-                                <button class="adjust adjust-just-right">This was just right!</button>
-                                <button class="adjust adjust-more">This was too hard.</button>
-                            </div>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-    </ul>
+                            <a class="followable-link" href="{{ link.link.url }}" data-query-id="{{ link.link.id }}" style="color:black; text-transform: none;">
+                                {{ link.link.title }} | {{ link.date_followed }}<span class="badge" style="margin-left:8px;">{{ link.link.complexity_score.show }}</span></a>
+                            {% if not link.reviewed %}
+                                <div data-query-id="{{ link.link.id }}" data-followed-link-id="{{ link.id }}">
+                                    <button class="adjust adjust-less">This was too easy.</button>
+                                    <button class="adjust adjust-just-right">This was just right!</button>
+                                    <button class="adjust adjust-more">This was too hard.</button>
+                                </div>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
 </div>
+
 <script type="text/javascript">
     $('.openbar-dropdown-followed-links').on('click', function(event) {
         $(".openbar-dropdown-followed-links").toggleClass('open');
@@ -38,7 +38,7 @@
     }
 
     $('.adjust-just-right').on('click', function(event) {
-       review($(this).parent().data("followed-link-id"));
+        review($(this).parent().data("followed-link-id"));
     });
 
     $('.adjust-less').on('click', function(event) {

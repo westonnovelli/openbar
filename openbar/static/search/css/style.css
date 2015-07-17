@@ -10,7 +10,7 @@ body {
 .navbar {
 	background-color: #77B140;
 	box-shadow: 0px 12px #388e3c;
-	padding-right: 15px;
+	padding-right:25px;
 }
 
 .navbar-text {
@@ -33,7 +33,6 @@ body {
 	border-radius: 20px;
 	color: white;
 	text-transform: lowercase;
-	margin-right: 10px;
 	transition: .3s;
 }
 
@@ -42,6 +41,11 @@ body {
 	border: 2px solid #ddd;
 	border-radius: 20px;
 	color: #ddd;
+}
+
+
+.navbar-btn:active {
+    background-color: yellow;
 }
 
 .display-box {
@@ -87,3 +91,9 @@ a {
 ul > li {
 	margin-left: 10px;
 }
+
+.list-group-item {
+    padding:10px;
+    margin-right:10px;
+}
+
