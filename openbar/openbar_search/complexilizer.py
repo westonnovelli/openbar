@@ -1,6 +1,7 @@
 import random
+
 from openbar.main import index
-from openbar_search.models.results_models import Query, BoozeComplexityScore
+from openbar_search.models import Query, BoozeComplexityScore
 
 __author__ = 'westonnovelli'
 
@@ -9,7 +10,7 @@ max = 4
 
 
 def get_random_complexity_score():
-    complexity_score, created = BoozeComplexityScore.objects.get_or_create(level=random.randint(min, max))
+    complexity_score = BoozeComplexityScore.objects.create(level=random.randint(min, max))
     return complexity_score
 
 def randomize_complexity(request):

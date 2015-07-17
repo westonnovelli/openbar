@@ -1,6 +1,8 @@
 __author__ = 'westonnovelli'
 from django import forms
-from openbar_search.models.results_models import Topic, Medium
+
+from openbar_search.models import Topic, Medium
+
 
 class PreferenceForm(forms.Form):
     topic = forms.ModelChoiceField(queryset=Topic.objects.all(), required=True)

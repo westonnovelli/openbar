@@ -1,8 +1,5 @@
-
 __author__ = 'westonnovelli'
 
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
 import inspect
 from enum import Enum
 
@@ -11,14 +8,6 @@ def complexity_constant():
 
 def booze_complexity_constant():
     return 1
-
-class MainManager(models.Manager):
-    """Helper to add new user to their respective group"""
-    def get_or_none(self, **kwargs):
-        try:
-            return self.get(**kwargs)
-        except ObjectDoesNotExist:
-            return None
 
 
 def convert(depth_of_material_score, num_to_letter=True):
@@ -45,18 +34,15 @@ def convert(depth_of_material_score, num_to_letter=True):
         return (ord(depth_of_material_score) - ord('A')) * constant
 
 
-def booze_convert(level, num_to_drink=True):
+def booze_convert(level):
     constant = booze_complexity_constant()
     score_map = {0: 'Coke', 1: 'Light Beer', 2: 'Wine', 3: 'Tequila', 4: 'Everclear'}
     count = 0
     score = constant
-    if num_to_drink:
-        while score <= level:
-            count += 1
-            score += constant
-        return score_map[count]
-    # else:
-    #     return () * constant
+    while score <= level:
+        count += 1
+        score += constant
+    return score_map[count]
 
 class ChoiceEnum(Enum):
 

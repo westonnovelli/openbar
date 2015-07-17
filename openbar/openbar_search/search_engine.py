@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from openbar_search.models.results_models import Query, Result
+
+from openbar_search.models import Query, Result
 from openbar_users.models import Searcher
 
 __author__ = 'westonnovelli'

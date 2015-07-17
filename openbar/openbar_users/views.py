@@ -1,16 +1,18 @@
-from collections import defaultdict
 import random
+
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+
 from forms import LoginForm, SearcherForm, FolderForm
 from models import Searcher, Folder, FollowedLink
+from openbar.global_follow import get_followed_links
 from openbar.main import index
 from openbar_search.forms import PreferenceForm
-from openbar_search.models.results_models import Preference, Query, BoozeComplexityScore
+from openbar_search.models import Preference, Query, BoozeComplexityScore
 
 
 @login_required
@@ -65,7 +67,7 @@ def create_searcher(request):
             searcher = Searcher(user_profile=user)
             root_folder = Folder(title="Folders", owner=searcher)
             root_folder.save()
-            complexity_score, created = BoozeComplexityScore.objects.get_or_create(level=random.randint(0, 4))
+            complexity_score = BoozeComplexityScore.objects.create(level=random.randint(0, 4))
             searcher.complexity_score = complexity_score
             print searcher
             searcher.save()
@@ -170,10 +172,18 @@ def get_searcher(request):
 @csrf_exempt
 def follow_link(request):
     searcher = get_searcher(request)
-    message = "Failed to get user"
     if searcher is not None:
         query = Query.objects.get(id=request.GET['query'])
         followed_link = FollowedLink(link=query, owner=searcher)
         followed_link.save()
-        message = "Saved link: %s" % query.id
-    return render(request, 'message.html', {'message': message})
+    return render(request, 'users/links_followed.html', {'followed_links': get_followed_links(searcher)})
+
+
+@login_required
+@csrf_exempt
+def reviewed_link(request):
+    followed_link = FollowedLink.objects.get(id=request.GET['id'])
+    followed_link.reviewed = True
+    followed_link.save()
+    owner = get_searcher(request)
+    return render(request, 'users/links_followed.html', {'followed_links': get_followed_links(owner)})

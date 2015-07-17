@@ -16,7 +16,7 @@
     <script type="text/javascript">
         function get_new_query(section) {
             $.ajax({
-                url: "{% url 'openbar_search.views.get_random_query'%}",
+                url: "{% url 'openbar_search.views.get_random_query' %}",
                 data: {id: $("#new_id").val()},
                 success: function(result){
                     $("#"+section).html(result);
@@ -36,6 +36,16 @@
                 data: {id: id, amount: amount},
                 success: function(result){
                     console.log(result);
+                }
+            });
+        }
+
+        function review(id) {
+            $.ajax({
+                url: "{% url 'openbar_users.views.reviewed_link' %}",
+                data: {id: id},
+                success: function(result){
+                    $("#links_followed").html(result);
                 }
             });
         }
@@ -78,7 +88,7 @@
                             <span class="badge" id="user_cs" data-toggle="modal" data-target="#complexitymodal"></span>
                         </p></li>
                     <li>
-                    <li>
+                    <li id="links_followed">
                       {% include 'users/links_followed.html' %}
                     </li>
                         <li><button type="button" class="btn btn-default navbar-btn" href="#!" onclick="document.getElementById('logout_form').submit()">Log Out</button></li>

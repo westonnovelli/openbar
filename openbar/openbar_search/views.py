@@ -1,14 +1,14 @@
+import random
+
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from openbar.global_util import convert
-import random
-from openbar.main import index, get_score_rank
+from openbar.global_follow import get_followed_links
 
+from openbar.main import index, get_score_rank
 from openbar_search.forms import PreferenceForm, SearchForm
-from openbar_search.models.results_models import Preference, Medium, BoozeComplexityScore, Query
+from openbar_search.models import Preference, Medium, BoozeComplexityScore, Query
 from openbar_search.search_engine import return_results
 from openbar_users.forms import LoginForm
 from openbar_users.models import Searcher, Folder
@@ -57,6 +57,7 @@ def search(request):
             data['ordered_score_list'] = get_score_rank()
             add_root_folder(request, data)
             data['login_form'] = LoginForm()
+            data['followed_links'] = get_followed_links(get_searcher(request))
             if search_form.cleaned_data['source'] == "extension":
                 return render(request, 'search/results_extension.html', data)
             return render(request, 'search/results.html', data)
@@ -87,10 +88,11 @@ def decrease_complexity_score(request):
         score = query.complexity_score
         for i in range(val):
             score.decrease_complexity_score()
+        score.save()
         query.save()
-        print "done"
         return render(request, 'message.html', {'message': score.show()})
     return redirect(index)
+
 
 def set_complexity_score(request):
     query = Query.objects.get_or_none(id=request.GET['id'])
@@ -104,6 +106,7 @@ def set_complexity_score(request):
         return render(request, 'message.html', {'message': score.show()})
     return redirect(index)
 
+
 def get_random_query(request=None):
     randomQ = None
     if request is not None and request.GET["id"] != "":
@@ -114,6 +117,7 @@ def get_random_query(request=None):
     if request is not None:
         return render(request, 'search/new_random.html', {'query': randomQ})
     return randomQ
+
 
 def normalize_scores(request):
     data = {'first': get_random_query()}

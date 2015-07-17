@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
+from openbar.global_follow import get_followed_links
 from openbar_users.forms import LoginForm
 from openbar_users.models import Folder, Searcher, FollowedLink
 
@@ -31,7 +32,7 @@ def index(request):
         owner = Searcher.objects.get_or_none(user_profile=user)
         if owner is not None:
             data['folders'] = [Folder.objects.get_or_none(owner=owner, parent=None)]
-            data['followed_links'] = FollowedLink.objects.filter(owner=owner)
+            data['followed_links'] = get_followed_links(owner)
     return render(request, 'index.html', data)
 
 

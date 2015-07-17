@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^get_user_complexity_score/$', 'openbar_users.views.get_user_complexity_score', name='get_user_cs'),
 
     url(r'^follow_link/$', 'openbar_users.views.follow_link', name='follow_link'),
+    url(r'^reviewed_link/$', 'openbar_users.views.reviewed_link'),
 
 
     url(r'^voodoo/599aaf818f60edbb2c001784f19217dd/randomize_complexity',

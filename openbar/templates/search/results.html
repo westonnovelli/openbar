@@ -28,7 +28,7 @@
                 url: "{% url 'openbar_users.views.follow_link' %}",
                 data: {"query": $(this).data("query-id")},
                 success: function(result) {
-                    console.log(result);
+                    $("#links_followed").html(result)
                 }
             });
         });

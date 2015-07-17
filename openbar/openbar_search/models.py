@@ -1,5 +1,6 @@
 from django.db import models
-from openbar.global_util import convert, MainManager, complexity_constant, booze_convert
+from openbar.global_util import convert, booze_convert, ChoiceEnum, booze_complexity_constant
+from openbar.global_manager import MainManager
 from math import hypot
 
 class ComplexityScore(models.Model):
@@ -36,7 +37,7 @@ class BasicComplexityScore(ComplexityScore):
     depth_of_material = models.IntegerField()
     average_time_to_master = models.IntegerField()
     radius = 300
-    score_differential = complexity_constant()/2
+    score_differential = booze_complexity_constant()/2
     objects = MainManager()
 
     def __unicode__(self):
@@ -87,13 +88,13 @@ class BasicComplexityScore(ComplexityScore):
 
 class BoozeComplexityScore(ComplexityScore):
     """
-    A Basic Complexity score will be a plotting of average time to master vs. depth of material
+    A Booze Complexity score will be a drink... how hard is the drink
     """
     level = models.IntegerField()
     radius = 2
     min = 0
     max = 4
-    score_differential = complexity_constant()/2
+    score_differential = booze_complexity_constant()
     objects = MainManager()
 
     def __unicode__(self):
@@ -115,17 +116,17 @@ class BoozeComplexityScore(ComplexityScore):
         """
         Increases the complexity score by a standard amount.
         """
-        self.level += self.score_differential/2
-        if self.level > max:
-            self.level = max
+        self.level += self.score_differential
+        if self.level > self.max:
+            self.level = self.max
 
     def decrease_complexity_score(self):
         """
         Decreases the complexity score by a standard amount.
         """
-        self.level -= self.score_differential/2
-        if self.level < min:
-            self.level = min
+        self.level -= self.score_differential
+        if self.level < self.min:
+            self.level = self.min
 
     def set_complexity_score(self, score):
         """
@@ -166,10 +167,6 @@ class Result:
     def set_complexity_distance(self, value):
         self.complexity_distance = value
         return self.complexity_distance
-
-from django.db import models
-from openbar.global_util import MainManager, ChoiceEnum
-# from openbar_users.models import Searcher
 
 class Topic(models.Model):
     name = models.CharField(unique=True, max_length=64)

@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from openbar.global_util import MainManager
-from openbar_search.models.results_models import BoozeComplexityScore, Query
+
+from openbar.global_manager import MainManager
+from openbar_search.models import BoozeComplexityScore, Query
 
 user_manager = MainManager()
 user_manager.contribute_to_class(User, 'custom_objects')
@@ -23,5 +24,6 @@ class Folder(models.Model):
 class FollowedLink(models.Model):
     owner = models.ForeignKey(Searcher, related_name='links_followed')
     link = models.ForeignKey(Query)
+    reviewed = models.BooleanField(default=False)
     date_followed = models.DateTimeField(auto_now_add=True)
     objects = MainManager()
