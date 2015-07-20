@@ -166,7 +166,7 @@ def get_user_complexity_score(request):
     return render(request, 'cs.html', {'cs': ""})
 
 def get_searcher(request):
-    return Searcher.objects.filter(user_profile=request.user)[0]
+    return Searcher.objects.get_or_none(user_profile=request.user.id)
 
 @login_required
 @csrf_exempt
@@ -187,3 +187,31 @@ def reviewed_link(request):
     followed_link.save()
     owner = get_searcher(request)
     return render(request, 'users/links_followed.html', {'followed_links': get_followed_links(owner)})
+
+
+@login_required
+@csrf_exempt
+def get_users_followed_links(request):
+    return render(request, 'users/links_followed.html', {'followed_links': get_followed_links(get_searcher(request))})
+
+@login_required
+@csrf_exempt
+def greeting(request):
+    greetings = [
+        "Hello",
+        "Howdy",
+        "Hi",
+        "Good Day",
+        "Sup",
+        "Hey",
+        "Well hello there",
+        "Yo",
+        "Greetings"
+    ]
+    chosen = greetings[random.randint(0, len(greetings)-1)]
+    return render(request, 'message.html', {'message': chosen})
+
+@login_required
+@csrf_exempt
+def username(request):
+    return render(request, 'message.html', {'message': request.user.username})

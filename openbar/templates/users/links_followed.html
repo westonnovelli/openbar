@@ -2,14 +2,14 @@
   <button type="button" class="btn btn-default dropdown-toggle navbar-btn openbar-dropdown openbar-dropdown-followed-links" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
   </button>
-  <ul class="dropdown-menu openbar-dropdown-menu openbar-dropdown-followed-links">
+  <ul class="dropdown-menu openbar-dropdown-menu openbar-dropdown-followed-links" style="width:750px">
             <li>
                 <ul class="list-unstyled nav nav-list">
                     {% for link in followed_links %}
                         <li>
 
                             <a class="followable-link" href="{{ link.link.url }}" data-query-id="{{ link.link.id }}" style="color:black; text-transform: none;">
-                                {{ link.link.title }} | {{ link.date_followed }}<span class="badge" style="margin-left:8px;">{{ link.link.complexity_score.show }}</span></a>
+                                {{ link.link.title }} | {{ link.date_followed }}<span class="badge" style="margin-left:8px; float:right;">{{ link.link.complexity_score.show }}</span></a>
                             {% if not link.reviewed %}
                                 <div data-query-id="{{ link.link.id }}" data-followed-link-id="{{ link.id }}">
                                     <button class="adjust adjust-less">This was too easy.</button>

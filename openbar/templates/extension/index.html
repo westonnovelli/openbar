@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+
+{% block specific_css %}
+
+    {% load staticfiles %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'search/css/style.css' %}" />
+
+{% endblock specific_css %}
+{% url 'index' as index_url %}
+
+{% block body_content %}
+
+
+    <br>
+    <div class="row">
+        <div class="col-md-5" align="right">
+            <img src="{% static 'search/img/openbar_logo.gif' %}" width="12%">
+        </div>
+        <div class="col-md-7" align="left">
+            <h1 class="logo" width="100%">open<b>bar</b></h1>
+            <h3 align="justify">breakthrough academic resources</h3><br>
+        </div>
+    </div><br>
+
+    <div class="container display-box" align="center">
+        <!-- Search Bar -->
+        <div class="row">
+            <div class="col-md-12">
+                {% include "search/search.html" %}
+            </div>
+        </div>
+    </div>
+{% endblock body_content %}

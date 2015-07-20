@@ -3,8 +3,8 @@
         {% for result in results %}
             <li class="list-group-item">
                 <span class="badge">{{ result.query.complexity_score.show }}</span>
-                <!--<span class="badge">{{ result.query.id }}</span>-->
-                <a href="{{ result.query.url }}"><h5>{{ result.query.title }}</h5></a>
+                <a class="followable-link" data-query-id="{{ result.query.id }}" href="{{ result.query.url }}" target="_blank"><h5>{{ result.query.title }}</h5></a>
+                {% include 'search/folder_manage.html' with query=result.query parent=root folders=folders%}
             </li>
         {% endfor %}
     </ul>

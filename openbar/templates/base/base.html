@@ -55,6 +55,7 @@
 </head>
 {% url 'logout' as logout_url %}
 {% url 'index' as index_url %}
+{% url 'animate' as animate_url %}
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-inverted navbar-fixed-top">
@@ -68,7 +69,7 @@
                 <span class="icon-bar"></span>
               </button>
               <a class="navbar-brand" href="{{ index_url }}" style="letter-spacing:2px;color:white">open<b>bar</b></a>
-                {% if request.get_full_path != index_url %}
+                {% if request.get_full_path != index_url and request.get_full_path != animate_url %}
                 <div class="navbar-form navbar-left"">
                     {% include 'search/search.html' with folders=folders%}
                 </div>
@@ -84,7 +85,7 @@
                     <li><button type="button" class="btn btn-default navbar-btn"><a href="/create_account">Sign Up</a></button></li>
                     <li><button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#loginModal" href="#!">Log In</button></li>
                 {% else %}
-                    <li><p class="navbar-text">Hello, <a href="home" style="color:yellow">{{ user.username }}</a>!
+                    <li><p class="navbar-text">Hello, <a href="home" style="color:yellow; text-transform:none;">{{ user.username }}</a>!
                             &nbsp;<span class="badge" id="user_cs" data-toggle="modal" data-target="#complexitymodal"></span>
                         </p></li>
                     <li>
@@ -133,6 +134,20 @@
         get_user_complexity_score();
     });
 </script>
+
+{% if user.is_authenticated %}
+    <script type="text/javascript">
+        $(".followable-link").on('click', function(event) {
+            $.ajax({
+                url: "{% url 'openbar_users.views.follow_link' %}",
+                data: {"query": $(this).data("query-id")},
+                success: function(result) {
+                    $("#links_followed").html(result)
+                }
+            });
+        });
+    </script>
+{% endif %}
 
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>

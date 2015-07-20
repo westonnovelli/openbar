@@ -1,0 +1,8 @@
+[
+  {
+    "model": "openbar_search.Topic",
+    "fields": {
+      "name": "Mathematics"
+    }
+  }
+]

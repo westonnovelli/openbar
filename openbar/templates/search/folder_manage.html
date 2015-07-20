@@ -1,13 +1,13 @@
 <div id="folder-manage-{{ query.id }}">
 {% if dropdown %}
-    <button id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
+    <button id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" data-method="remove_link" data-query-id="{{ query.id }}" data-parent-id="{{ parent.id }}" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
 {% else %}
     {% if query in root.items.all %}
-        <button id="btn-save-{{ query.id }}" type="button" class="action btn btn-xs btn-success" onclick="save_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-saved"></span></button>
-        <button id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
+        <button id="btn-save-{{ query.id }}" type="button" class="action btn btn-xs btn-success" data-method="save_link" data-query-id="{{ query.id }}" data-parent-id="{{ parent.id }}" onclick="save_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-saved"></span></button>
+        <button id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" data-method="remove_link" data-query-id="{{ query.id }}" data-parent-id="{{ parent.id }}" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
     {% else %}
-        <button id="btn-save-{{ query.id }}" type="button" class="action btn btn-xs btn-primary" onclick="save_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-save"></span></button>
-        <button style="display:none;" id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
+        <button id="btn-save-{{ query.id }}" type="button" class="action btn btn-xs btn-primary" data-method="save_link" data-query-id="{{ query.id }}" data-parent-id="{{ parent.id }}" onclick="save_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-save"></span></button>
+        <button style="display:none;" id="btn-remove-{{ query.id }}" type="button" class="action btn btn-xs" data-method="remove_link" data-query-id="{{ query.id }}" data-parent-id="{{ parent.id }}" onclick="remove_link({{ query.id }}, {{ parent.id }})"><span style="color:white;" class="glyphicon glyphicon-floppy-remove"></span></button>
     {% endif %}
 {% endif %}
 </div>

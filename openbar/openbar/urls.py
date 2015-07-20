@@ -22,6 +22,9 @@ urlpatterns = [
 
     url(r'^animate$', 'openbar.main.animate', name='animate'),
 
+    url(r'greeting/$', 'openbar_users.views.greeting'),
+    url(r'username/$', 'openbar_users.views.username'),
+
     url(r'^show_login/$', 'openbar_users.views.login_page', name='show_login'),
     url(r'^accounts/login/$', 'openbar_users.views.app_login', name='login'),
     url(r'^accounts/logout/$', 'openbar_users.views.app_logout', name='logout'),
@@ -44,6 +47,7 @@ urlpatterns = [
 
     url(r'^get_user_complexity_score/$', 'openbar_users.views.get_user_complexity_score', name='get_user_cs'),
 
+    url(r'^get_followed_links/$', 'openbar_users.views.get_users_followed_links'),
     url(r'^follow_link/$', 'openbar_users.views.follow_link', name='follow_link'),
     url(r'^reviewed_link/$', 'openbar_users.views.reviewed_link'),
 

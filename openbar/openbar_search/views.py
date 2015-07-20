@@ -37,7 +37,7 @@ def add_preference(request):
 
 
 def get_searcher(request):
-    return Searcher.objects.filter(user_profile=request.user)[0]
+    return Searcher.objects.get_or_none(user_profile=request.user.id)
 
 
 def add_root_folder(request, data):

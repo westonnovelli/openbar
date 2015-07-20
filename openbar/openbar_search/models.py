@@ -150,7 +150,7 @@ class Query(models.Model):
     subject = models.TextField()
     title = models.TextField()      # This may change
     complexity_score = models.ForeignKey(BoozeComplexityScore, null=True)
-    short_form = models.CharField(max_length=140, default="Preview of the page")
+    body = models.CharField(max_length=140, default="No Preview Available")
     objects = MainManager()
 
 
