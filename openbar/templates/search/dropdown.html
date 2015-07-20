@@ -12,7 +12,7 @@
                 {% if user.is_authenticated %}
                     {% include 'users/folders.html' with folders=folders %}
                 {% else %}
-                    <a data-toggle="modal" data-target="#loginModal" href="#!">Log In</a> to save bookmarks.
+                    <a data-toggle="modal" data-target="#loginModal" href="#!" style="text-transform: none; color: #337ab7;">Log In</a> to save bookmarks.
                 {% endif %}
             </ul>
         </li>
