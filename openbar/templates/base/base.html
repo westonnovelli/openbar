@@ -104,9 +104,25 @@
           </div><!-- /.container-fluid -->
         </nav>
 
-
+<div class="wrapper">
 {% block body_content %}
 {% endblock body_content %}
+</div>
+<footer class="footer">
+  <div class="container text-center">
+    <div class="row">
+        <div class="col-sm-12">
+            <hr class="footer-hr">
+            <ul class="nav nav-pills nav-justified">
+                <li><a href="/">Ask the Bartender!</a></li>
+                <li><a href="/">© 2015 OpenStax.</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</footer>
 
 {% if not user.is_authenticated %}
     {% include "login/login.html" %}
