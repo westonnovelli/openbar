@@ -65,7 +65,7 @@ def create_searcher(request):
             user = User(username=name)
             user.save()
             searcher = Searcher(user_profile=user)
-            root_folder = Folder(title="Folders", owner=searcher)
+            root_folder = Folder(title="Bookmarks", owner=searcher)
             root_folder.save()
             complexity_score = BoozeComplexityScore.objects.create(level=random.randint(0, 4))
             searcher.complexity_score = complexity_score
@@ -73,6 +73,14 @@ def create_searcher(request):
             searcher.save()
         else:
             return create_account(request)
+    return redirect(index)
+
+@login_required
+def update_score(request):
+    searcher = get_searcher(request)
+    complexity_score = BoozeComplexityScore.objects.create(level=random.randint(0, 4))
+    searcher.complexity_score = complexity_score
+    searcher.save()
     return redirect(index)
 
 

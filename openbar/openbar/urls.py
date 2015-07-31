@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'greeting/$', 'openbar_users.views.greeting'),
     url(r'username/$', 'openbar_users.views.username'),
 
+    url(r'complex/$', 'openbar_users.views.update_score'),
+
     url(r'^show_login/$', 'openbar_users.views.login_page', name='show_login'),
     url(r'^accounts/login/$', 'openbar_users.views.app_login', name='login'),
     url(r'^accounts/logout/$', 'openbar_users.views.app_logout', name='logout'),
